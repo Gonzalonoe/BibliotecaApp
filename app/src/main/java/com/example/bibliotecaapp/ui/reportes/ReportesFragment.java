@@ -36,7 +36,6 @@ public class ReportesFragment extends Fragment {
     private Uri imagenUri;
     private ReportesAdapter adapter;
 
-    // 🔹 Lanzador para seleccionar imagen desde galería
     private final ActivityResultLauncher<String> seleccionarImagen =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 if (uri != null) {
@@ -49,12 +48,8 @@ public class ReportesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflar layout
         View root = inflater.inflate(R.layout.fragment_reportes, container, false);
 
-        // ================================
-        // 🧩 Inicialización de vistas
-        // ================================
         etTitulo = root.findViewById(R.id.etTituloReporte);
         etSinopsis = root.findViewById(R.id.etSinopsisReporte);
         ivPreview = root.findViewById(R.id.ivPreviewPortada);
@@ -62,35 +57,20 @@ public class ReportesFragment extends Fragment {
         Button btnEnviar = root.findViewById(R.id.btnEnviarReporte);
         rvReportes = root.findViewById(R.id.rvReportes);
 
-        // ================================
-        // 🧠 ViewModel
-        // ================================
         vm = new ViewModelProvider(this).get(ReportesViewModel.class);
 
-        // ================================
-        // 🗂️ Configurar RecyclerView
-        // ================================
         rvReportes.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new ReportesAdapter(new ArrayList<Reporte>());
         rvReportes.setAdapter(adapter);
 
-        // ================================
-        // 👀 Observadores
-        // ================================
         vm.getReportes().observe(getViewLifecycleOwner(), reportes -> {
             if (reportes != null) {
                 adapter.actualizarLista(reportes);
             }
         });
 
-        // ================================
-        // 📸 Seleccionar imagen
-        // ================================
         btnSeleccionar.setOnClickListener(v -> seleccionarImagen.launch("image/*"));
 
-        // ================================
-        // 🚀 Enviar reporte
-        // ================================
         btnEnviar.setOnClickListener(v -> {
             String titulo = etTitulo.getText().toString().trim();
             String sinopsis = etSinopsis.getText().toString().trim();
@@ -102,16 +82,12 @@ public class ReportesFragment extends Fragment {
 
             vm.enviarReporte(titulo, sinopsis, imagenUri);
 
-            // ✅ Limpiar formulario tras envío
             etTitulo.setText("");
             etSinopsis.setText("");
             ivPreview.setImageResource(R.drawable.ic_menu_book);
             imagenUri = null;
         });
 
-        // ================================
-        // 📋 Cargar reportes existentes
-        // ================================
         vm.cargarReportes();
 
         return root;

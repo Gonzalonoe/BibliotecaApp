@@ -32,19 +32,16 @@ public class DetallePedidoFragment extends Fragment {
 
         vm = new ViewModelProvider(this).get(DetallePedidoViewModel.class);
 
-        // ✅ Recibir el pedido seleccionado
         if (getArguments() != null && getArguments().containsKey("pedidoSeleccionado")) {
             Pedido pedido = (Pedido) getArguments().getSerializable("pedidoSeleccionado");
             vm.setPedido(pedido);
         }
 
-        // 🔹 Observadores
         vm.getPedido().observe(getViewLifecycleOwner(), this::mostrarDetalles);
         vm.getMensaje().observe(getViewLifecycleOwner(), msg -> {
             if (msg != null) Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         });
 
-        // 🟢 Acciones de los botones
         btnPendiente.setOnClickListener(v -> {
             Pedido pedido = vm.getPedido().getValue();
             if (pedido != null) vm.cambiarEstado(pedido.getId(), 0);
@@ -78,8 +75,6 @@ public class DetallePedidoFragment extends Fragment {
         tvFechaPedido = root.findViewById(R.id.tvFechaPedido);
         tvFechaVencimiento = root.findViewById(R.id.tvFechaVencimiento);
         tvObservaciones = root.findViewById(R.id.tvObservaciones);
-
-        // Botones de estado
         btnPendiente = root.findViewById(R.id.btnPendiente);
         btnPrestado = root.findViewById(R.id.btnPrestado);
         btnDevuelto = root.findViewById(R.id.btnDevuelto);
@@ -89,12 +84,12 @@ public class DetallePedidoFragment extends Fragment {
     private void mostrarDetalles(Pedido pedido) {
         if (pedido == null) return;
 
-        // 📖 Datos del libro
+
         tvTitulo.setText("📖 " + (pedido.getLibro() != null ? pedido.getLibro().getTitulo() : pedido.getTituloSolicitado()));
         tvAutor.setText("✍️ " + (pedido.getLibro() != null ? pedido.getLibro().getAutor() : "-"));
         tvAnio.setText("📅 " + (pedido.getLibro() != null && pedido.getLibro().getAnio() != null ? pedido.getLibro().getAnio() : "-"));
 
-        // 👤 Datos del usuario
+
         if (pedido.getUsuario() != null) {
             tvUsuario.setText("👤 " + pedido.getUsuario().getNombre());
             tvEmail.setText("📧 " + pedido.getUsuario().getEmail());
@@ -103,10 +98,10 @@ public class DetallePedidoFragment extends Fragment {
             tvEmail.setText("📧 -");
         }
 
-        // 📦 Estado
+
         tvEstado.setText("📦 Estado: " + getNombreEstado(pedido.getEstado()));
 
-        // 📆 Fechas
+
         String fechaPedido = pedido.getFechaPedido();
         String fechaVenc = pedido.getFechaVencimiento();
 
@@ -118,11 +113,11 @@ public class DetallePedidoFragment extends Fragment {
         tvFechaPedido.setText("📆 Pedido: " + (fechaPedido != null ? fechaPedido : "-"));
         tvFechaVencimiento.setText("⏳ Vence: " + (fechaVenc != null ? fechaVenc : "-"));
 
-        // 📝 Observaciones
+
         tvObservaciones.setText("📝 " + (pedido.getObservaciones() != null ? pedido.getObservaciones() : "Sin observaciones"));
     }
 
-    // 🔹 Traducción de estado
+
     private String getNombreEstado(int estado) {
         switch (estado) {
             case 0: return "Pendiente";

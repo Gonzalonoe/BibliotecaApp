@@ -54,7 +54,6 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
         return pedidos.size();
     }
 
-    // 🔹 ViewHolder interno
     static class PedidoViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitulo, tvEstado, tvFecha, tvVencimiento;
         Button btnCancelar;
@@ -69,7 +68,6 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
         }
 
         public void bind(Pedido pedido, OnPedidoAccionListener listener) {
-            // 🔸 Mostrar título del libro o solicitado
             String titulo = (pedido.getLibro() != null)
                     ? pedido.getLibro().getTitulo()
                     : pedido.getTituloSolicitado();
@@ -77,7 +75,6 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
             tvTitulo.setText(titulo);
             tvEstado.setText("Estado: " + getNombreEstado(pedido.getEstado()));
 
-            // 🔸 Manejo de fechas (por si vienen como string)
             String fechaPedido = pedido.getFechaPedido();
             String fechaVenc = pedido.getFechaVencimiento();
 
@@ -91,7 +88,6 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
             tvFecha.setText("Pedido: " + (fechaPedido != null ? fechaPedido : "-"));
             tvVencimiento.setText("Vence: " + (fechaVenc != null ? fechaVenc : "-"));
 
-            // 🔸 Botón cancelar visible solo si está pendiente
             if (pedido.getEstado() == 0) {
                 btnCancelar.setVisibility(View.VISIBLE);
                 btnCancelar.setOnClickListener(v -> {
@@ -101,13 +97,11 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
                 btnCancelar.setVisibility(View.GONE);
             }
 
-            // 🔸 Clic para ver detalles
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onVerDetalles(pedido);
             });
         }
 
-        // 🔹 Estados actualizados
         private String getNombreEstado(int estado) {
             switch (estado) {
                 case 0:

@@ -30,7 +30,6 @@ public class DetallePedidoViewModel extends AndroidViewModel {
         return mensaje;
     }
 
-    // 🔹 Cargar pedido actualizado desde API
     public void cargarPedidoPorId(int pedidoId) {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
@@ -53,12 +52,10 @@ public class DetallePedidoViewModel extends AndroidViewModel {
         });
     }
 
-    // 🔹 Asigna un pedido localmente (por argumento desde el fragment)
     public void setPedido(Pedido pedido) {
         pedidoLiveData.setValue(pedido);
     }
 
-    // 🟢 Cambiar el estado del pedido (Pendiente, Prestado, Devuelto, Cancelado)
     public void cambiarEstado(int pedidoId, int nuevoEstado) {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
@@ -82,7 +79,6 @@ public class DetallePedidoViewModel extends AndroidViewModel {
         });
     }
 
-    // 🟩 Marcar pedido como devuelto (usa endpoint /devolver)
     public void devolverPedido(int pedidoId) {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
@@ -106,7 +102,6 @@ public class DetallePedidoViewModel extends AndroidViewModel {
         });
     }
 
-    // 🔸 Traducción del estado a texto amigable
     private String getNombreEstado(int estado) {
         switch (estado) {
             case 0: return "Pendiente";

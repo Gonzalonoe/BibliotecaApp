@@ -40,7 +40,6 @@ public class PedidosFragment extends Fragment {
 
         vm = new ViewModelProvider(this).get(PedidosViewModel.class);
 
-        // 🔹 Observa los cambios en la lista de pedidos
         vm.getPedidosLiveData().observe(getViewLifecycleOwner(), pedidos -> {
             if (pedidos != null && !pedidos.isEmpty()) {
                 adapter.setPedidos(pedidos);
@@ -49,7 +48,6 @@ public class PedidosFragment extends Fragment {
             }
         });
 
-        // 🔹 Listener de acciones (cancelar y ver detalles)
         adapter.setOnPedidoAccionListener(new PedidosAdapter.OnPedidoAccionListener() {
             @Override
             public void onCancelarPedido(Pedido pedido) {
@@ -65,7 +63,6 @@ public class PedidosFragment extends Fragment {
             }
         });
 
-        // 🔹 Cargar los pedidos al iniciar el fragment
         vm.cargarPedidos();
 
         return root;

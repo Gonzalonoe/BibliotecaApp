@@ -7,14 +7,14 @@ public class Pedido implements Serializable {
     private int usuarioId;
     private Libro libro;
     private String tituloSolicitado;
-    private String fechaPedido;         // 🔹 antes Date
-    private String fechaVencimiento;    // 🔹 antes Date
-    private String fechaDevolucion;     // 🔹 antes Date
+    private String fechaPedido;
+    private String fechaVencimiento;
+    private String fechaDevolucion;
     private int estado;
     private String observaciones;
-    private Usuario usuario;            // 🔹 Agregamos para mostrar detalles
+    private Usuario usuario;
 
-    // --- Getters ---
+
     public int getId() { return id; }
     public int getUsuarioId() { return usuarioId; }
     public Libro getLibro() { return libro; }
@@ -26,6 +26,6 @@ public class Pedido implements Serializable {
     public String getObservaciones() { return observaciones; }
     public Usuario getUsuario() { return usuario; }
 
-    // --- Setters ---
+
     public void setEstado(int estado) { this.estado = estado; }
 }

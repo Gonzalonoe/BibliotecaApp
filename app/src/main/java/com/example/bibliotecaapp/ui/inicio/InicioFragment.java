@@ -76,7 +76,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void abrirEnGoogleMaps() {
-        // Abre la ubicación real en Google Maps
         String geoUri = "geo:38.8887,-77.0047?q=Library+of+Congress,+Washington+D.C.";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
         intent.setPackage("com.google.android.apps.maps");

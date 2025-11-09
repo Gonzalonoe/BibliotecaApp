@@ -144,7 +144,6 @@ public class DetalleLibroViewModel extends AndroidViewModel {
         });
     }
 
-    // 🟦 NUEVA FUNCIÓN: Reserva real del libro -> crea un pedido en la API
     public void reservarLibro() {
         Libro libro = libroSeleccionado.getValue();
         if (libro == null) {

@@ -16,7 +16,6 @@ public class LibroUpdateRequest {
         this.descripcion = descripcion;
     }
 
-    // Getters y Setters
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
 

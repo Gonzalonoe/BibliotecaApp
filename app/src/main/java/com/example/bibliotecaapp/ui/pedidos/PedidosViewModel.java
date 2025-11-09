@@ -30,7 +30,6 @@ public class PedidosViewModel extends AndroidViewModel {
         return pedidosLiveData;
     }
 
-    // 🔹 Cargar los pedidos del usuario actual
     public void cargarPedidos() {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
@@ -54,7 +53,6 @@ public class PedidosViewModel extends AndroidViewModel {
         });
     }
 
-    // 🔹 Crear un nuevo pedido
     public void crearPedido(int libroId, String titulo) {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
@@ -81,7 +79,6 @@ public class PedidosViewModel extends AndroidViewModel {
         });
     }
 
-    // 🔹 Cancelar un pedido (solo si está pendiente)
     public void cancelarPedido(int pedidoId) {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();

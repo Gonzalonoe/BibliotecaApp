@@ -77,7 +77,6 @@ public class LibrosAdapter extends RecyclerView.Adapter<LibrosAdapter.ViewHolder
         return lista.size();
     }
 
-    // ✅ MÉTODO NUEVO: actualizar lista para búsqueda avanzada o refrescos
     public void actualizarLista(List<Libro> nuevosLibros) {
         this.lista.clear();
         this.lista.addAll(nuevosLibros);
