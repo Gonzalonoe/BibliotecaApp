@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.example.bibliotecaapp.ui.inicio.InicioFragment"
+        android:label="Ubicación Biblioteca"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_libros"
+        android:name="com.example.bibliotecaapp.ui.libros.LibrosFragment"
+        android:label="Libros"
+        tools:layout="@layout/fragment_libros">
+
+        <action
+            android:id="@+id/action_nav_libros_to_detallesLibroFragment"
+            app:destination="@id/detallesLibroFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_nav_libros_to_nav_cargar_libro"
+            app:destination="@id/nav_cargar_libro"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_nav_libros_to_busquedaAvanzadaFragment"
+            app:destination="@id/busquedaAvanzadaFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.bibliotecaapp.ui.logout.LogoutFragment"
+        android:label="Cerrar Sesión"
+        tools:layout="@layout/fragment_logout" />
+
+    <fragment
+        android:id="@+id/detallesLibroFragment"
+        android:name="com.example.bibliotecaapp.ui.libros.DetalleLibroFragment"
+        android:label="Detalles del Libro"
+        tools:layout="@layout/fragment_detalle_libro" />
+
+    <fragment
+        android:id="@+id/nav_cargar_libro"
+        android:name="com.example.bibliotecaapp.ui.libros.CargarLibrosFragment"
+        android:label="Cargar Libro"
+        tools:layout="@layout/fragment_cargar_libros" />
+
+    <fragment
+        android:id="@+id/busquedaAvanzadaFragment"
+        android:name="com.example.bibliotecaapp.ui.libros.BusquedaAvanzadaFragment"
+        android:label="Búsqueda Avanzada"
+        tools:layout="@layout/fragment_busqueda_avanzada" />
+    <fragment
+        android:id="@+id/nav_reportes"
+        android:name="com.example.bibliotecaapp.ui.reportes.ReportesFragment"
+        android:label="Reportes"
+        tools:layout="@layout/fragment_reportes" />
+
+    <fragment
+        android:id="@+id/nav_pedidos"
+        android:name="com.example.bibliotecaapp.ui.pedidos.PedidosFragment"
+        android:label="Mis Pedidos"
+        tools:layout="@layout/fragment_pedidos" />
+
+    <fragment
+        android:id="@+id/nav_busqueda_avanzada"
+        android:name="com.example.bibliotecaapp.ui.libros.BusquedaAvanzadaFragment"
+        android:label="Búsqueda Avanzada"
+        tools:layout="@layout/fragment_busqueda_avanzada" />
+
+    <fragment
+        android:id="@+id/detallePedidoFragment"
+        android:name="com.example.bibliotecaapp.ui.pedidos.DetallePedidoFragment"
+        android:label="Detalle del Pedido"
+        tools:layout="@layout/fragment_detalle_pedido" />
+</navigation>
+

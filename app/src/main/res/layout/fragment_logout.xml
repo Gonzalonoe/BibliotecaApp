@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF9F0"
+    tools:context=".ui.logout.LogoutFragment"
+    android:alpha="0"
+    android:translationY="50dp"
+    android:animateLayoutChanges="true">
+
+    <ImageView
+        android:id="@+id/ivLogoutIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/outline_block_24"
+        app:tint="#D32F2F"
+        android:contentDescription="Icono de Cerrar Sesión"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/tvTituloLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        app:layout_constraintTop_toBottomOf="@id/ivLogoutIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDescripcionLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Estás a punto de cerrar tu sesión actual. Si continuas, deberás iniciar sesión nuevamente para acceder a la biblioteca digital."
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:textColor="#666666"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloLogout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/viewDecorativa"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:background="#FFE0E0"
+        app:layout_constraintTop_toBottomOf="@id/tvDescripcionLogout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="CERRAR SESIÓN"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:backgroundTint="#E57373"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="40dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/viewDecorativa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

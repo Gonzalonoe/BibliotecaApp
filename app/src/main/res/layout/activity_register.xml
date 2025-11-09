@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_registro"
+    android:padding="24dp"
+    tools:context=".ui.login.RegisterActivity">
+
+    <View
+        android:id="@+id/fondo_transparente"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AAFFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/ivLogoRegistro"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="44dp"
+        android:contentDescription="Logo Biblioteca"
+        android:src="@drawable/ic_book_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTituloRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro de Usuario"
+        android:textColor="#4A2C00"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@id/ivLogoRegistro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNombre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Nombre"
+        app:startIconDrawable="@drawable/ic_person"
+        app:boxStrokeColor="#D17B0F"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloRegistro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#4A2C00"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Email"
+        app:startIconDrawable="@drawable/ic_email"
+        app:boxStrokeColor="#D17B0F"
+        app:layout_constraintTop_toBottomOf="@id/tilNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="#4A2C00"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Contraseña"
+        app:startIconDrawable="@drawable/ic_lock"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeColor="#D17B0F"
+        app:layout_constraintTop_toBottomOf="@id/tilEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="#4A2C00"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#D17B0F"
+        android:elevation="6dp"
+        android:text="Registrar"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPassword" />
+
+    <Button
+        android:id="@+id/btnInicio"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#8C5E28"
+        android:elevation="6dp"
+        android:text="Inicio"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnRegistrar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

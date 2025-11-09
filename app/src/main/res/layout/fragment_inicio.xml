@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF9F0"
+    tools:context=".ui.inicio.InicioFragment">
+
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardInfoMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:backgroundTint="#FFFFFFFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_anchorGravity="top"
+        android:layout_gravity="top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTituloMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📍 Biblioteca Central"
+                android:textColor="#4A2C00"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvDireccionMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Biblioteca del Congreso de Estados Unidos"
+                android:textColor="#7A5C3A"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAbrirMaps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:contentDescription="Abrir en Google Maps"
+        android:src="@drawable/ic_mapa_externo"
+        android:backgroundTint="#E28B1E"
+        app:tint="@android:color/white"
+        android:elevation="8dp"
+        app:maxImageSize="30dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

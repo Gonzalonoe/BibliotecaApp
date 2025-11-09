@@ -1,0 +1,7 @@
+[
+  { "elementType": "geometry", "stylers": [{ "color": "#f5f1e6" }] },
+  { "elementType": "labels.text.fill", "stylers": [{ "color": "#4a2c00" }] },
+  { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#d5caa3" }] },
+  { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#fdfcf8" }] },
+  { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
+]

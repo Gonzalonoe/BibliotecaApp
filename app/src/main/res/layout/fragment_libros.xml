@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark"
+    android:padding="16dp"
+    tools:context=".ui.libros.LibrosFragment">
+
+    <Button
+        android:id="@+id/btnBusquedaAvanzada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="🔍 Búsqueda Avanzada"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTextLight"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="sans-serif-medium"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnCargarLibro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="➕ Cargar Libro"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTextLight"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:fontFamily="sans-serif-medium"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/btnBusquedaAvanzada"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerLibros"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnCargarLibro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_libro" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/colorBackgroundDark"
+    tools:context=".ui.libros.DetalleLibroFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+
+        <ImageView
+            android:id="@+id/ivPortadaDetalle"
+            android:layout_width="167dp"
+            android:layout_height="203dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Portada del libro"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_menu_book" />
+
+
+        <EditText
+            android:id="@+id/tvTituloDetalle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:enabled="false"
+            android:hint="Título"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/ivPortadaDetalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <EditText
+            android:id="@+id/tvAutorDetalle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Autor"
+            android:textColor="@color/colorTextLight"
+            android:textSize="16sp"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloDetalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp" />
+
+
+        <EditText
+            android:id="@+id/tvAnioDetalle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Año"
+            android:inputType="number"
+            android:textColor="@color/colorTextLight"
+            android:textSize="16sp"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/tvAutorDetalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp" />
+
+
+        <EditText
+            android:id="@+id/tvStockDetalle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Stock disponible"
+            android:inputType="number"
+            android:textColor="@color/colorSuccess"
+            android:textSize="16sp"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/tvAnioDetalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp" />
+
+
+        <EditText
+            android:id="@+id/tvDescripcionDetalle"
+            android:layout_width="373dp"
+            android:layout_height="79dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:enabled="false"
+            android:gravity="top|start"
+            android:hint="Descripción del libro"
+            android:minHeight="100dp"
+            android:textColor="@color/colorTextLight"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/btnEditar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvStockDetalle"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <Button
+            android:id="@+id/btnEditar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="✏️ Editar"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextLight"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:layout_constraintBottom_toTopOf="@id/btnReservar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnReservar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="📚 Reservar"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextLight"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="🗑️ Eliminar"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextLight"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_red_dark"
+            app:cornerRadius="14dp"
+            app:layout_constraintTop_toBottomOf="@id/btnReservar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
