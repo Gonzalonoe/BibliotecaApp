@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.bibliotecaapp.models.Pedido;
 import com.example.bibliotecaapp.models.PedidoRequest;
+import com.example.bibliotecaapp.models.Usuario;
 import com.example.bibliotecaapp.request.ApiClient;
 
 import java.util.List;
@@ -32,9 +33,20 @@ public class PedidosViewModel extends AndroidViewModel {
 
     public void cargarPedidos() {
         String token = ApiClient.leerToken(getApplication());
+        Usuario usuario = ApiClient.leerUsuario(getApplication());
+
+        String rol = (usuario != null) ? usuario.getRol() : "";
+
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
 
-        Call<List<Pedido>> call = api.obtenerMisPedidos("Bearer " + token);
+        Call<List<Pedido>> call;
+
+        if ("Admin".equalsIgnoreCase(rol)) {
+            call = api.obtenerTodosLosPedidos("Bearer " + token);
+        } else {
+            call = api.obtenerMisPedidos("Bearer " + token);
+        }
+
         call.enqueue(new Callback<List<Pedido>>() {
             @Override
             public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {

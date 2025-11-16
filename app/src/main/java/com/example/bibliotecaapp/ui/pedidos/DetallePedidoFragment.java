@@ -1,6 +1,7 @@
 package com.example.bibliotecaapp.ui.pedidos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Context;
 
 import com.example.bibliotecaapp.R;
 import com.example.bibliotecaapp.models.Pedido;
@@ -31,6 +34,28 @@ public class DetallePedidoFragment extends Fragment {
         inicializar(root);
 
         vm = new ViewModelProvider(this).get(DetallePedidoViewModel.class);
+
+
+        String rol = requireContext()
+                .getSharedPreferences("datos_usuario", Context.MODE_PRIVATE)
+                .getString("rol", "");
+
+        boolean esAdmin = rol.equalsIgnoreCase("1") || rol.equalsIgnoreCase("admin");
+
+        Log.d("PEDIDOS-ROL", "Rol detectado: " + rol + " → esAdmin = " + esAdmin);
+
+
+        if (!esAdmin) {
+            btnPendiente.setVisibility(View.GONE);
+            btnPrestado.setVisibility(View.GONE);
+            btnDevuelto.setVisibility(View.GONE);
+            btnCancelado.setVisibility(View.GONE);
+        } else {
+            btnPendiente.setVisibility(View.VISIBLE);
+            btnPrestado.setVisibility(View.VISIBLE);
+            btnDevuelto.setVisibility(View.VISIBLE);
+            btnCancelado.setVisibility(View.VISIBLE);
+        }
 
         if (getArguments() != null && getArguments().containsKey("pedidoSeleccionado")) {
             Pedido pedido = (Pedido) getArguments().getSerializable("pedidoSeleccionado");
@@ -75,6 +100,7 @@ public class DetallePedidoFragment extends Fragment {
         tvFechaPedido = root.findViewById(R.id.tvFechaPedido);
         tvFechaVencimiento = root.findViewById(R.id.tvFechaVencimiento);
         tvObservaciones = root.findViewById(R.id.tvObservaciones);
+
         btnPendiente = root.findViewById(R.id.btnPendiente);
         btnPrestado = root.findViewById(R.id.btnPrestado);
         btnDevuelto = root.findViewById(R.id.btnDevuelto);
@@ -84,39 +110,30 @@ public class DetallePedidoFragment extends Fragment {
     private void mostrarDetalles(Pedido pedido) {
         if (pedido == null) return;
 
-
         tvTitulo.setText("📖 " + (pedido.getLibro() != null ? pedido.getLibro().getTitulo() : pedido.getTituloSolicitado()));
         tvAutor.setText("✍️ " + (pedido.getLibro() != null ? pedido.getLibro().getAutor() : "-"));
         tvAnio.setText("📅 " + (pedido.getLibro() != null && pedido.getLibro().getAnio() != null ? pedido.getLibro().getAnio() : "-"));
 
-
         if (pedido.getUsuario() != null) {
             tvUsuario.setText("👤 " + pedido.getUsuario().getNombre());
             tvEmail.setText("📧 " + pedido.getUsuario().getEmail());
-        } else {
-            tvUsuario.setText("👤 -");
-            tvEmail.setText("📧 -");
         }
 
-
         tvEstado.setText("📦 Estado: " + getNombreEstado(pedido.getEstado()));
-
 
         String fechaPedido = pedido.getFechaPedido();
         String fechaVenc = pedido.getFechaVencimiento();
 
         if (fechaPedido != null && fechaPedido.length() >= 10)
             fechaPedido = fechaPedido.substring(0, 10);
+
         if (fechaVenc != null && fechaVenc.length() >= 10)
             fechaVenc = fechaVenc.substring(0, 10);
 
-        tvFechaPedido.setText("📆 Pedido: " + (fechaPedido != null ? fechaPedido : "-"));
-        tvFechaVencimiento.setText("⏳ Vence: " + (fechaVenc != null ? fechaVenc : "-"));
-
-
-        tvObservaciones.setText("📝 " + (pedido.getObservaciones() != null ? pedido.getObservaciones() : "Sin observaciones"));
+        tvFechaPedido.setText("📆 Pedido: " + fechaPedido);
+        tvFechaVencimiento.setText("⏳ Vence: " + fechaVenc);
+        tvObservaciones.setText("📝 " + pedido.getObservaciones());
     }
-
 
     private String getNombreEstado(int estado) {
         switch (estado) {

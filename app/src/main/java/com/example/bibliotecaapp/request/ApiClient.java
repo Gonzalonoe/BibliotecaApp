@@ -146,6 +146,9 @@ public class ApiClient {
                 @Path("id") int id,
                 @Body int nuevoEstado
         );
+
+        @GET("pedidos")
+        Call<List<Pedido>> obtenerTodosLosPedidos(@Header("Authorization") String token);
     }
     public static void guardarToken(Context context, String token) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
@@ -155,14 +158,6 @@ public class ApiClient {
     public static String leerToken(Context context) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
         return sp.getString("token", null);
-    }
-
-    public static void guardarUsuario(Context context, Usuario usuario) {
-        SharedPreferences sp = context.getSharedPreferences("Usuario.xml", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        Gson gson = new Gson();
-        editor.putString("Usuario", gson.toJson(usuario));
-        editor.apply();
     }
 
     public static Usuario leerUsuario(Context context) {

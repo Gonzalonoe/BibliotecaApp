@@ -54,12 +54,14 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
     }
 
     static class PedidoViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitulo, tvEstado, tvFecha, tvVencimiento;
+
+        TextView tvTitulo, tvUsuario, tvEstado, tvFecha, tvVencimiento;
         Button btnCancelar;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.tvTituloPedido);
+            tvUsuario = itemView.findViewById(R.id.tvUsuarioPedido);
             tvEstado = itemView.findViewById(R.id.tvEstadoPedido);
             tvFecha = itemView.findViewById(R.id.tvFechaPedido);
             tvVencimiento = itemView.findViewById(R.id.tvFechaVencimiento);
@@ -67,25 +69,32 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
         }
 
         public void bind(Pedido pedido, OnPedidoAccionListener listener) {
+
             String titulo = (pedido.getLibro() != null)
                     ? pedido.getLibro().getTitulo()
                     : pedido.getTituloSolicitado();
 
             tvTitulo.setText(titulo);
+
+            if (pedido.getUsuario() != null) {
+                tvUsuario.setText("👤 " + pedido.getUsuario().getNombre());
+            } else {
+                tvUsuario.setText("👤 Usuario desconocido");
+            }
+
             tvEstado.setText("Estado: " + getNombreEstado(pedido.getEstado()));
 
             String fechaPedido = pedido.getFechaPedido();
             String fechaVenc = pedido.getFechaVencimiento();
 
-            if (fechaPedido != null && fechaPedido.length() >= 10) {
+            if (fechaPedido != null && fechaPedido.length() >= 10)
                 fechaPedido = fechaPedido.substring(0, 10);
-            }
-            if (fechaVenc != null && fechaVenc.length() >= 10) {
-                fechaVenc = fechaVenc.substring(0, 10);
-            }
 
-            tvFecha.setText("Pedido: " + (fechaPedido != null ? fechaPedido : "-"));
-            tvVencimiento.setText("Vence: " + (fechaVenc != null ? fechaVenc : "-"));
+            if (fechaVenc != null && fechaVenc.length() >= 10)
+                fechaVenc = fechaVenc.substring(0, 10);
+
+            tvFecha.setText("Pedido: " + fechaPedido);
+            tvVencimiento.setText("Vence: " + fechaVenc);
 
             if (pedido.getEstado() == 0) {
                 btnCancelar.setVisibility(View.VISIBLE);
@@ -103,20 +112,13 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
 
         private String getNombreEstado(int estado) {
             switch (estado) {
-                case 0:
-                    return "Pendiente";
-                case 1:
-                    return "Aprobado";
-                case 2:
-                    return "Prestado";
-                case 3:
-                    return "Devuelto";
-                case 4:
-                    return "Vencido";
-                case 5:
-                    return "Cancelado";
-                default:
-                    return "Desconocido";
+                case 0: return "Pendiente";
+                case 1: return "Aprobado";
+                case 2: return "Prestado";
+                case 3: return "Devuelto";
+                case 4: return "Vencido";
+                case 5: return "Cancelado";
+                default: return "Desconocido";
             }
         }
     }

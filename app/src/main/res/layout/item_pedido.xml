@@ -24,6 +24,16 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvUsuarioPedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="👤 Usuario"
+            android:textColor="@color/colorTextMuted"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+
+        <TextView
             android:id="@+id/tvEstadoPedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
