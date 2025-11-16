@@ -34,38 +34,39 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class ApiClient {
-    public static String BASE_URL="http://127.0.0.1:5000/";
 
+    public static String BASE_URL = "http://127.0.0.1:5000/api/";
 
-    public static InmoServicio getInmoServicio(){
+    public static InmoServicio getInmoServicio() {
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss") // formato exacto del backend
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .setLenient()
                 .create();
-        Retrofit retrofit =new Retrofit.Builder()
+
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+
         return retrofit.create(InmoServicio.class);
     }
 
+    public interface InmoServicio {
 
-    public interface InmoServicio{
-
-        @POST("api/auth/login")
+        @POST("auth/login")
         Call<LoginResponse> login(@Body LoginRequest request);
 
-        @GET("api/usuarios/perfil")
+        @GET("usuarios/perfil")
         Call<Usuario> obtenerPerfil(@Header("Authorization") String token);
 
-        @GET("api/libros")
-        Call<List<Libro>> obtenerLibros(@Header("Authorization") String token);
-
-        @POST("api/usuarios/crear-lector")
+        @POST("usuarios/crear-lector")
         Call<Usuario> registrarUsuario(@Body Usuario usuario);
 
+        @GET("libros")
+        Call<List<Libro>> obtenerLibros(@Header("Authorization") String token);
+
         @Multipart
-        @POST("api/libros/crear")
+        @POST("libros/crear")
         Call<Libro> crearLibro(
                 @Header("Authorization") String token,
                 @Part("titulo") RequestBody titulo,
@@ -76,17 +77,17 @@ public class ApiClient {
                 @Part MultipartBody.Part portada
         );
 
-        @PUT("api/libros/{id}")
+        @PUT("libros/{id}")
         Call<Libro> actualizarLibro(
                 @Header("Authorization") String token,
                 @Path("id") int id,
                 @Body LibroUpdateRequest libroRequest
         );
 
-        @DELETE("api/libros/{id}")
+        @DELETE("libros/{id}")
         Call<Void> eliminarLibro(@Header("Authorization") String token, @Path("id") int id);
 
-        @GET("api/libros/buscar")
+        @GET("libros/buscar")
         Call<Map<String, Object>> buscarLibrosPaginados(
                 @Header("Authorization") String token,
                 @Query("titulo") String titulo,
@@ -98,8 +99,9 @@ public class ApiClient {
                 @Query("pageSize") int pageSize
         );
 
+
         @Multipart
-        @POST("api/reportes/crear")
+        @POST("reportes/crear")
         Call<Reporte> crearReporte(
                 @Header("Authorization") String token,
                 @Part("TituloLibro") RequestBody tituloLibro,
@@ -107,75 +109,68 @@ public class ApiClient {
                 @Part MultipartBody.Part ImagenPortada
         );
 
-        @GET("api/reportes")
+        @GET("reportes")
         Call<List<Reporte>> getReportes(@Header("Authorization") String token);
 
-        @POST("api/pedidos/crear")
+
+        @POST("pedidos/crear")
         Call<Pedido> crearPedido(
                 @Header("Authorization") String token,
                 @Body PedidoRequest pedido
         );
 
-        @GET("api/pedidos/mios")
-        Call<List<Pedido>> obtenerMisPedidos(
-                @Header("Authorization") String token
-        );
+        @GET("pedidos/mios")
+        Call<List<Pedido>> obtenerMisPedidos(@Header("Authorization") String token);
 
-        @PUT("api/pedidos/{id}/cancelar")
+        @PUT("pedidos/{id}/cancelar")
         Call<Void> cancelarPedido(
                 @Header("Authorization") String token,
                 @Path("id") int id
         );
 
-        @GET("api/pedidos/{id}")
+        @GET("pedidos/{id}")
         Call<Pedido> obtenerPedidoPorId(
                 @Header("Authorization") String token,
                 @Path("id") int id
         );
 
-        @PUT("api/pedidos/{id}/devolver")
+        @PUT("pedidos/{id}/devolver")
         Call<Pedido> devolverPedido(
                 @Header("Authorization") String token,
                 @Path("id") int id
         );
 
-        @PUT("api/pedidos/{id}/estado")
+        @PUT("pedidos/{id}/estado")
         Call<Pedido> cambiarEstadoPedido(
                 @Header("Authorization") String token,
                 @Path("id") int id,
                 @Body int nuevoEstado
         );
-
-
     }
     public static void guardarToken(Context context, String token) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("token", token);
-        editor.apply();
+        sp.edit().putString("token", token).apply();
     }
+
     public static String leerToken(Context context) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);
         return sp.getString("token", null);
     }
 
-
     public static void guardarUsuario(Context context, Usuario usuario) {
         SharedPreferences sp = context.getSharedPreferences("Usuario.xml", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         Gson gson = new Gson();
-        String UsuarioJson = gson.toJson(usuario);
-        editor.putString("Usuario", UsuarioJson);
+        editor.putString("Usuario", gson.toJson(usuario));
         editor.apply();
     }
 
     public static Usuario leerUsuario(Context context) {
-        SharedPreferences sp = context.getSharedPreferences("usuario.xml", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("Usuario.xml", Context.MODE_PRIVATE);
         String usuarioJson = sp.getString("Usuario", null);
 
         if (usuarioJson != null) {
-            Gson gson = new Gson();
-            return gson.fromJson(usuarioJson, Usuario.class);
+            return new Gson().fromJson(usuarioJson, Usuario.class);
         } else {
             return null;
         }

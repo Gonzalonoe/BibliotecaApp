@@ -1,12 +1,14 @@
 package com.example.bibliotecaapp.ui.reportes;
 
 import android.app.Application;
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.bibliotecaapp.models.Reporte;
@@ -27,13 +29,16 @@ import retrofit2.Response;
 
 public class ReportesViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Reporte>> reportesLive = new MutableLiveData<>();
+    private final MutableLiveData<List<Reporte>> reportesLive = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> esAdminLive = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> navegarVerTodosLive = new MutableLiveData<>();
 
     public ReportesViewModel(@NonNull Application application) {
         super(application);
+        verificarRol();
     }
 
-    public MutableLiveData<List<Reporte>> getReportes() {
+    public LiveData<List<Reporte>> getReportes() {
         return reportesLive;
     }
 
@@ -114,4 +119,39 @@ public class ReportesViewModel extends AndroidViewModel {
         outputStream.close();
         return tempFile;
     }
+
+    private void verificarRol() {
+        try {
+            Context context = getApplication().getApplicationContext();
+
+            String rol = context.getSharedPreferences("datos_usuario", Context.MODE_PRIVATE)
+                    .getString("rol", "");
+
+            boolean esAdmin = rol.equalsIgnoreCase("1") || rol.equalsIgnoreCase("admin");
+            esAdminLive.setValue(esAdmin);
+
+            Log.d("ReportesViewModel", "Rol detectado: " + rol + " → esAdmin=" + esAdmin);
+
+        } catch (Exception e) {
+            Log.e("ReportesViewModel", "Error al verificar rol: " + e.getMessage());
+            esAdminLive.setValue(false);
+        }
+    }
+
+    public LiveData<Boolean> getEsAdmin() {
+        return esAdminLive;
+    }
+
+    public LiveData<Boolean> getNavegarVerTodos() {
+        return navegarVerTodosLive;
+    }
+
+    public void onVerTodosClicked() {
+        navegarVerTodosLive.setValue(true);
+    }
+
+    public void resetNavegacion() {
+        navegarVerTodosLive.setValue(false);
+    }
 }
+

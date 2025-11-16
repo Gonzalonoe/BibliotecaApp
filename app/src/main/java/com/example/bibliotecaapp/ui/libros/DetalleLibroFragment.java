@@ -28,10 +28,18 @@ public class DetalleLibroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_detalle_libro, container, false);
         inicializarVista(root);
 
         vm = new ViewModelProvider(this).get(DetalleLibroViewModel.class);
+
+        // 🔥 CONTROL DE ADMIN
+        vm.getEsAdmin().observe(getViewLifecycleOwner(), esAdmin -> {
+            btnEditar.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+            btnEliminar.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+        });
+
         if (getArguments() != null) {
             Libro libro = (Libro) getArguments().getSerializable("libro");
             if (libro != null) {
@@ -50,7 +58,6 @@ public class DetalleLibroFragment extends Fragment {
                 Glide.with(requireContext())
                         .load(libro.getPortada())
                         .placeholder(R.drawable.ic_menu_book)
-                        .error(R.drawable.ic_menu_book)
                         .into(ivPortada);
             } else {
                 ivPortada.setImageResource(R.drawable.ic_menu_book);
@@ -68,8 +75,7 @@ public class DetalleLibroFragment extends Fragment {
         });
 
         btnEditar.setOnClickListener(v -> {
-            Boolean editando = vm.getModoEdicion().getValue();
-            if (editando != null && editando) {
+            if (vm.getModoEdicion().getValue() != null && vm.getModoEdicion().getValue()) {
                 vm.guardarCambios(
                         etTitulo.getText().toString(),
                         etAutor.getText().toString(),
@@ -90,7 +96,6 @@ public class DetalleLibroFragment extends Fragment {
                     .setMessage("¿Seguro que deseas eliminar este libro?")
                     .setPositiveButton("Sí", (dialog, which) -> {
                         vm.eliminarLibro();
-                        // 🔙 Volver automáticamente al listado de libros
                         Navigation.findNavController(v).popBackStack(R.id.nav_libros, false);
                     })
                     .setNegativeButton("Cancelar", null)

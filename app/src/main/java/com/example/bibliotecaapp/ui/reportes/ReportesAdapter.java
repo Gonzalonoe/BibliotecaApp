@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.bibliotecaapp.R;
 import com.example.bibliotecaapp.models.Reporte;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHolder> {
@@ -20,7 +21,7 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
     private final List<Reporte> lista;
 
     public ReportesAdapter(List<Reporte> lista) {
-        this.lista = lista;
+        this.lista = lista != null ? lista : new ArrayList<>();
     }
 
     @NonNull
@@ -34,10 +35,29 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Reporte reporte = lista.get(position);
-        holder.tvTitulo.setText(reporte.getTituloLibro());
-        holder.tvSinopsis.setText(reporte.getSinopsis());
-        holder.tvUsuario.setText("Por: " + reporte.getUsuarioNombre());
-        holder.tvFecha.setText("Fecha: " + reporte.getFecha());
+
+        String titulo = (reporte.getTituloLibro() != null && !reporte.getTituloLibro().isEmpty())
+                ? reporte.getTituloLibro()
+                : "Sin título";
+        holder.tvTitulo.setText(titulo);
+
+        holder.tvSinopsis.setText(
+                reporte.getSinopsis() != null && !reporte.getSinopsis().isEmpty()
+                        ? reporte.getSinopsis()
+                        : "Sin descripción disponible."
+        );
+
+        holder.tvUsuario.setText(
+                reporte.getUsuarioNombre() != null
+                        ? "Por: " + reporte.getUsuarioNombre()
+                        : "Usuario desconocido"
+        );
+
+        holder.tvFecha.setText(
+                reporte.getFecha() != null
+                        ? "Fecha: " + reporte.getFecha()
+                        : "Fecha no disponible"
+        );
 
         if (reporte.getImagenPortada() != null && !reporte.getImagenPortada().isEmpty()) {
             Glide.with(holder.itemView.getContext())
@@ -56,7 +76,9 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
 
     public void actualizarLista(List<Reporte> nuevos) {
         lista.clear();
-        lista.addAll(nuevos);
+        if (nuevos != null) {
+            lista.addAll(nuevos);
+        }
         notifyDataSetChanged();
     }
 

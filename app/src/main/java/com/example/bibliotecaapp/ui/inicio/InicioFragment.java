@@ -36,7 +36,6 @@ public class InicioFragment extends Fragment implements OnMapReadyCallback {
 
         vm = new ViewModelProvider(this).get(InicioViewModel.class);
 
-        // Mapa
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {

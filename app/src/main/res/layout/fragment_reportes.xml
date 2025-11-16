@@ -32,13 +32,15 @@
         app:layout_constraintTop_toBottomOf="@id/etTituloReporte"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp" />
 
     <Button
         android:id="@+id/btnSeleccionarImagen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Seleccionar Imagen"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/etSinopsisReporte"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="12dp" />
@@ -49,15 +51,31 @@
         android:layout_height="160dp"
         android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
+        android:contentDescription="Vista previa de imagen"
         app:layout_constraintTop_toBottomOf="@id/btnSeleccionarImagen"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- ✅ Botón para admins -->
+    <Button
+        android:id="@+id/btnVerTodosReportes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ver todos los reportes"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/ivPreviewPortada"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnEnviarReporte"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Enviar Reporte"
-        app:layout_constraintTop_toBottomOf="@id/ivPreviewPortada"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/btnVerTodosReportes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />

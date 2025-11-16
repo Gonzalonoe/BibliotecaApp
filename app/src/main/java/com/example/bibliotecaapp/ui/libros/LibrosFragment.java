@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -26,20 +25,25 @@ public class LibrosFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_libros, container, false);
 
         vm = new ViewModelProvider(this).get(LibrosViewModel.class);
+
         recyclerLibros = root.findViewById(R.id.recyclerLibros);
         btnBusquedaAvanzada = root.findViewById(R.id.btnBusquedaAvanzada);
         btnCargarLibro = root.findViewById(R.id.btnCargarLibro);
 
         recyclerLibros.setLayoutManager(new LinearLayoutManager(getContext()));
+
         vm.getLibros().observe(getViewLifecycleOwner(), libros -> {
             LibrosAdapter adapter = new LibrosAdapter(libros, LibrosFragment.this);
             recyclerLibros.setAdapter(adapter);
         });
 
-        Button btnBusquedaAvanzada = root.findViewById(R.id.btnBusquedaAvanzada);
+        vm.getEsAdmin().observe(getViewLifecycleOwner(), esAdmin -> {
+            btnCargarLibro.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+        });
 
         btnBusquedaAvanzada.setOnClickListener(v -> {
             NavHostFragment.findNavController(this)

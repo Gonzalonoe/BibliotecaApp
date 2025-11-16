@@ -1,6 +1,8 @@
 package com.example.bibliotecaapp.ui.libros;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,32 +28,36 @@ public class DetalleLibroViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> modoEdicion = new MutableLiveData<>(false);
     private final MutableLiveData<String> textoBotonEditar = new MutableLiveData<>("✏️ Editar");
 
+    private final MutableLiveData<Boolean> esAdminLive = new MutableLiveData<>();
+
     private final ApiClient.InmoServicio api;
 
     public DetalleLibroViewModel(@NonNull Application application) {
         super(application);
         api = ApiClient.getInmoServicio();
+        verificarRol();  // ← IMPORTANTE
     }
 
-    public void setLibro(Libro libro) {
-        libroSeleccionado.setValue(libro);
+    private void verificarRol() {
+        SharedPreferences sp = getApplication().getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+
+        String rol = sp.getString("rol", "0");
+
+        boolean admin = "1".equals(rol) || "Admin".equalsIgnoreCase(rol);
+
+        esAdminLive.setValue(admin);
     }
 
-    public LiveData<Libro> getLibro() {
-        return libroSeleccionado;
+
+    public LiveData<Boolean> getEsAdmin() {
+        return esAdminLive;
     }
 
-    public LiveData<String> getMensaje() {
-        return mensaje;
-    }
-
-    public LiveData<Boolean> getModoEdicion() {
-        return modoEdicion;
-    }
-
-    public LiveData<String> getTextoBotonEditar() {
-        return textoBotonEditar;
-    }
+    public void setLibro(Libro libro) { libroSeleccionado.setValue(libro); }
+    public LiveData<Libro> getLibro() { return libroSeleccionado; }
+    public LiveData<String> getMensaje() { return mensaje; }
+    public LiveData<Boolean> getModoEdicion() { return modoEdicion; }
+    public LiveData<String> getTextoBotonEditar() { return textoBotonEditar; }
 
     public void alternarModoEdicion() {
         Boolean editando = modoEdicion.getValue();

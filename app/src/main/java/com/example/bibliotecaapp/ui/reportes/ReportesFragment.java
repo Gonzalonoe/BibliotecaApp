@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,16 +26,14 @@ import java.util.ArrayList;
 
 public class ReportesFragment extends Fragment {
 
-    // 🔹 ViewModel
     private ReportesViewModel vm;
-
-    // 🔹 Vistas
     private EditText etTitulo;
     private EditText etSinopsis;
     private ImageView ivPreview;
     private RecyclerView rvReportes;
     private Uri imagenUri;
     private ReportesAdapter adapter;
+    private Button btnVerTodos;
 
     private final ActivityResultLauncher<String> seleccionarImagen =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -55,6 +54,7 @@ public class ReportesFragment extends Fragment {
         ivPreview = root.findViewById(R.id.ivPreviewPortada);
         Button btnSeleccionar = root.findViewById(R.id.btnSeleccionarImagen);
         Button btnEnviar = root.findViewById(R.id.btnEnviarReporte);
+        btnVerTodos = root.findViewById(R.id.btnVerTodosReportes);
         rvReportes = root.findViewById(R.id.rvReportes);
 
         vm = new ViewModelProvider(this).get(ReportesViewModel.class);
@@ -66,6 +66,17 @@ public class ReportesFragment extends Fragment {
         vm.getReportes().observe(getViewLifecycleOwner(), reportes -> {
             if (reportes != null) {
                 adapter.actualizarLista(reportes);
+            }
+        });
+
+        vm.getEsAdmin().observe(getViewLifecycleOwner(), esAdmin -> {
+            btnVerTodos.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+        });
+
+        vm.getNavegarVerTodos().observe(getViewLifecycleOwner(), navegar -> {
+            if (navegar) {
+                Navigation.findNavController(root).navigate(R.id.action_reportesFragment_to_listaReportesFragment);
+                vm.resetNavegacion();
             }
         });
 
@@ -87,6 +98,8 @@ public class ReportesFragment extends Fragment {
             ivPreview.setImageResource(R.drawable.ic_menu_book);
             imagenUri = null;
         });
+
+        btnVerTodos.setOnClickListener(v -> vm.onVerTodosClicked());
 
         vm.cargarReportes();
 

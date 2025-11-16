@@ -1,6 +1,8 @@
 package com.example.bibliotecaapp.ui.libros;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -19,22 +21,22 @@ import retrofit2.Response;
 
 public class LibrosViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Libro>> libros;
+    private MutableLiveData<List<Libro>> libros = new MutableLiveData<>();
+    private MutableLiveData<Boolean> esAdminLive = new MutableLiveData<>();
 
     public LibrosViewModel(@NonNull Application application) {
         super(application);
+        verificarRol();
     }
 
     public LiveData<List<Libro>> getLibros() {
-        if (libros == null) {
-            libros = new MutableLiveData<>();
-        }
         return libros;
     }
 
     public void cargarLibros() {
         String token = ApiClient.leerToken(getApplication());
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
+
         Call<List<Libro>> call = api.obtenerLibros("Bearer " + token);
 
         call.enqueue(new Callback<List<Libro>>() {
@@ -53,4 +55,22 @@ public class LibrosViewModel extends AndroidViewModel {
             }
         });
     }
+
+    public LiveData<Boolean> getEsAdmin() {
+        return esAdminLive;
+    }
+
+    private void verificarRol() {
+        SharedPreferences sp =
+                getApplication().getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+
+        String rol = sp.getString("rol", "").trim();
+
+        boolean esAdmin = rol.equalsIgnoreCase("Admin");
+
+        Log.d("ROL_DEBUG", "ROL EN SharedPreferences = " + rol);
+
+        esAdminLive.setValue(esAdmin);
+    }
 }
+

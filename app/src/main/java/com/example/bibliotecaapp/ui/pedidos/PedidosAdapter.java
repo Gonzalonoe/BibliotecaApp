@@ -20,7 +20,6 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidoVi
     private List<Pedido> pedidos = new ArrayList<>();
     private OnPedidoAccionListener listener;
 
-    // 🔹 Interfaz para eventos del adapter
     public interface OnPedidoAccionListener {
         void onCancelarPedido(Pedido pedido);
         void onVerDetalles(Pedido pedido);
