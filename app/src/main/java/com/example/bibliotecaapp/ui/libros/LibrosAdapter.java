@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,8 +58,11 @@ public class LibrosAdapter extends RecyclerView.Adapter<LibrosAdapter.ViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
+
             Bundle bundle = new Bundle();
             bundle.putSerializable("libro", libro);
+
+            NavController navController = NavHostFragment.findNavController(fragment);
 
             NavOptions navOptions = new NavOptions.Builder()
                     .setEnterAnim(R.anim.slide_in_right)
@@ -67,8 +71,20 @@ public class LibrosAdapter extends RecyclerView.Adapter<LibrosAdapter.ViewHolder
                     .setPopExitAnim(R.anim.slide_out_right)
                     .build();
 
-            NavHostFragment.findNavController(fragment)
-                    .navigate(R.id.action_nav_libros_to_detallesLibroFragment, bundle, navOptions);
+            int currentId = navController.getCurrentDestination().getId();
+
+            int actionId;
+
+            if (currentId == R.id.nav_libros) {
+                actionId = R.id.action_nav_libros_to_detallesLibroFragment;
+            } else if (currentId == R.id.busquedaAvanzadaFragment) {
+                actionId = R.id.action_busquedaAvanzadaFragment_to_detallesLibroFragment;
+            } else {
+                // fallback seguro
+                actionId = R.id.detallesLibroFragment;
+            }
+
+            navController.navigate(actionId, bundle, navOptions);
         });
     }
 

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/colorBackgroundDark"
+    android:scrollbars="none"
     tools:context=".ui.libros.DetalleLibroFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,58 +91,54 @@
             android:layout_marginTop="4dp" />
 
 
-        <EditText
+        <TextView
             android:id="@+id/tvDescripcionDetalle"
-            android:layout_width="373dp"
-            android:layout_height="79dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:enabled="false"
-            android:gravity="top|start"
-            android:hint="Descripción del libro"
-            android:minHeight="100dp"
+            android:padding="12dp"
             android:textColor="@color/colorTextLight"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@id/btnEditar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_texto_redondeado"
+            android:justificationMode="inter_word"
+            android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@id/tvStockDetalle"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnEditar" />
 
 
         <Button
             android:id="@+id/btnEditar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="✏️ Editar"
             android:textAllCaps="false"
             android:textColor="@color/colorTextLight"
             android:textStyle="bold"
             app:cornerRadius="14dp"
-            app:layout_constraintBottom_toTopOf="@id/btnReservar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionDetalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <Button
             android:id="@+id/btnReservar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
+            android:layout_marginTop="12dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="📚 Reservar"
             android:textAllCaps="false"
             android:textColor="@color/colorTextLight"
             android:textStyle="bold"
             app:cornerRadius="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btnEditar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <Button
             android:id="@+id/btnEliminar"
@@ -157,7 +154,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

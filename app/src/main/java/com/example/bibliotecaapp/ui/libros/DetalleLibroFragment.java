@@ -1,6 +1,5 @@
 package com.example.bibliotecaapp.ui.libros;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,13 +16,13 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.bibliotecaapp.R;
-import com.example.bibliotecaapp.models.Libro;
 
 public class DetalleLibroFragment extends Fragment {
 
     private DetalleLibroViewModel vm;
     private ImageView ivPortada;
-    private EditText etTitulo, etAutor, etAnio, etStock, etDescripcion;
+    private EditText etTitulo, etAutor, etAnio, etStock;
+    private TextView etDescripcion;
     private Button btnReservar, btnEditar, btnEliminar;
 
     @Override
@@ -34,73 +34,62 @@ public class DetalleLibroFragment extends Fragment {
 
         vm = new ViewModelProvider(this).get(DetalleLibroViewModel.class);
 
-        // 🔥 CONTROL DE ADMIN
-        vm.getEsAdmin().observe(getViewLifecycleOwner(), esAdmin -> {
-            btnEditar.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
-            btnEliminar.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
-        });
+        vm.cargarLibroDesdeArgs(getArguments());
 
-        if (getArguments() != null) {
-            Libro libro = (Libro) getArguments().getSerializable("libro");
-            if (libro != null) {
-                vm.setLibro(libro);
-            }
-        }
-
-        vm.getLibro().observe(getViewLifecycleOwner(), libro -> {
+        vm.libro.observe(getViewLifecycleOwner(), libro -> {
             etTitulo.setText(libro.getTitulo());
             etAutor.setText(libro.getAutor());
             etAnio.setText(String.valueOf(libro.getAnio()));
             etStock.setText(String.valueOf(libro.getStock()));
             etDescripcion.setText(libro.getDescripcion());
 
-            if (libro.getPortada() != null && !libro.getPortada().isEmpty()) {
-                Glide.with(requireContext())
-                        .load(libro.getPortada())
-                        .placeholder(R.drawable.ic_menu_book)
-                        .into(ivPortada);
-            } else {
-                ivPortada.setImageResource(R.drawable.ic_menu_book);
-            }
+            Glide.with(requireContext())
+                    .load(libro.getPortada())
+                    .placeholder(R.drawable.ic_menu_book)
+                    .error(R.drawable.ic_menu_book)
+                    .into(ivPortada);
         });
 
-        vm.getTextoBotonEditar().observe(getViewLifecycleOwner(), texto -> btnEditar.setText(texto));
+        vm.visibleEditar.observe(getViewLifecycleOwner(), v -> btnEditar.setVisibility(v));
+        vm.visibleEliminar.observe(getViewLifecycleOwner(), v -> btnEliminar.setVisibility(v));
 
-        vm.getModoEdicion().observe(getViewLifecycleOwner(), editando -> {
-            etTitulo.setEnabled(editando);
-            etAutor.setEnabled(editando);
-            etAnio.setEnabled(editando);
-            etStock.setEnabled(editando);
-            etDescripcion.setEnabled(editando);
+        vm.editable.observe(getViewLifecycleOwner(), enabled -> {
+            etTitulo.setEnabled(enabled);
+            etAutor.setEnabled(enabled);
+            etAnio.setEnabled(enabled);
+            etStock.setEnabled(enabled);
         });
 
-        btnEditar.setOnClickListener(v -> {
-            if (vm.getModoEdicion().getValue() != null && vm.getModoEdicion().getValue()) {
-                vm.guardarCambios(
+        vm.textoBotonEditar.observe(getViewLifecycleOwner(),
+                txt -> btnEditar.setText(txt));
+
+        vm.toast.observe(getViewLifecycleOwner(),
+                msg -> android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_SHORT).show());
+
+        vm.volverAtras.observe(getViewLifecycleOwner(),
+                v -> Navigation.findNavController(requireView()).popBackStack());
+
+        vm.mostrarDialogoEliminar.observe(getViewLifecycleOwner(), unused -> {
+            new android.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Confirmar eliminación")
+                    .setMessage("¿Seguro que deseas eliminar este libro?")
+                    .setPositiveButton("Sí", (dialog, which) -> vm.confirmarEliminar())
+                    .setNegativeButton("Cancelar", null)
+                    .show();
+        });
+
+        btnEditar.setOnClickListener(v ->
+                vm.onEditarClick(
                         etTitulo.getText().toString(),
                         etAutor.getText().toString(),
                         etAnio.getText().toString(),
                         etStock.getText().toString(),
                         etDescripcion.getText().toString()
-                );
-            } else {
-                vm.alternarModoEdicion();
-            }
-        });
+                ));
 
         btnReservar.setOnClickListener(v -> vm.reservarLibro());
 
-        btnEliminar.setOnClickListener(v -> {
-            new AlertDialog.Builder(requireContext())
-                    .setTitle("Confirmar eliminación")
-                    .setMessage("¿Seguro que deseas eliminar este libro?")
-                    .setPositiveButton("Sí", (dialog, which) -> {
-                        vm.eliminarLibro();
-                        Navigation.findNavController(v).popBackStack(R.id.nav_libros, false);
-                    })
-                    .setNegativeButton("Cancelar", null)
-                    .show();
-        });
+        btnEliminar.setOnClickListener(v -> vm.solicitarEliminar());
 
         return root;
     }

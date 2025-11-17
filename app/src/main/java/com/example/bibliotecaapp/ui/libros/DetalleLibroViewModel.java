@@ -3,11 +3,10 @@ package com.example.bibliotecaapp.ui.libros;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.bibliotecaapp.models.Libro;
@@ -22,168 +21,135 @@ import retrofit2.Response;
 
 public class DetalleLibroViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<Libro> libroSeleccionado = new MutableLiveData<>();
-    private final MutableLiveData<String> mensaje = new MutableLiveData<>();
+    public MutableLiveData<Libro> libro = new MutableLiveData<>();
+    public MutableLiveData<String> toast = new MutableLiveData<>();
 
-    private final MutableLiveData<Boolean> modoEdicion = new MutableLiveData<>(false);
-    private final MutableLiveData<String> textoBotonEditar = new MutableLiveData<>("✏️ Editar");
+    public MutableLiveData<Integer> visibleEditar = new MutableLiveData<>(android.view.View.GONE);
+    public MutableLiveData<Integer> visibleEliminar = new MutableLiveData<>(android.view.View.GONE);
 
-    private final MutableLiveData<Boolean> esAdminLive = new MutableLiveData<>();
+    public MutableLiveData<Boolean> editable = new MutableLiveData<>(false);
+    public MutableLiveData<String> textoBotonEditar = new MutableLiveData<>("✏️ Editar");
+
+    public MutableLiveData<Void> mostrarDialogoEliminar = new MutableLiveData<>();
+    public MutableLiveData<Void> volverAtras = new MutableLiveData<>();
 
     private final ApiClient.InmoServicio api;
 
-    public DetalleLibroViewModel(@NonNull Application application) {
-        super(application);
+    public DetalleLibroViewModel(@NonNull Application app) {
+        super(app);
         api = ApiClient.getInmoServicio();
-        verificarRol();  // ← IMPORTANTE
+        verificarRol();
+    }
+
+    public void cargarLibroDesdeArgs(Bundle args) {
+        if (args == null) return;
+        Libro l = (Libro) args.getSerializable("libro");
+        libro.setValue(l);
     }
 
     private void verificarRol() {
-        SharedPreferences sp = getApplication().getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+        SharedPreferences sp = getApplication()
+                .getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
 
         String rol = sp.getString("rol", "0");
+        boolean admin = rol.equals("1") || rol.equalsIgnoreCase("admin");
 
-        boolean admin = "1".equals(rol) || "Admin".equalsIgnoreCase(rol);
-
-        esAdminLive.setValue(admin);
+        visibleEditar.setValue(admin ? android.view.View.VISIBLE : android.view.View.GONE);
+        visibleEliminar.setValue(admin ? android.view.View.VISIBLE : android.view.View.GONE);
     }
 
+    public void onEditarClick(String t, String a, String anio, String stock, String desc) {
 
-    public LiveData<Boolean> getEsAdmin() {
-        return esAdminLive;
-    }
+        boolean modo = editable.getValue();
 
-    public void setLibro(Libro libro) { libroSeleccionado.setValue(libro); }
-    public LiveData<Libro> getLibro() { return libroSeleccionado; }
-    public LiveData<String> getMensaje() { return mensaje; }
-    public LiveData<Boolean> getModoEdicion() { return modoEdicion; }
-    public LiveData<String> getTextoBotonEditar() { return textoBotonEditar; }
-
-    public void alternarModoEdicion() {
-        Boolean editando = modoEdicion.getValue();
-        if (editando == null) editando = false;
-
-        modoEdicion.setValue(!editando);
-        textoBotonEditar.setValue(!editando ? "💾 Guardar" : "✏️ Editar");
-    }
-
-    public void guardarCambios(String titulo, String autor, String anio, String stock, String descripcion) {
-        Libro libro = libroSeleccionado.getValue();
-
-        if (libro == null) {
-            mensaje.setValue("Error: no se encontró el libro para editar.");
+        if (!modo) {
+            editable.setValue(true);
+            textoBotonEditar.setValue("💾 Guardar");
             return;
         }
 
-        String token = ApiClient.leerToken(getApplication());
-        if (token == null) {
-            mensaje.setValue("⚠️ Sesión expirada. Inicie sesión nuevamente.");
-            return;
-        }
+        Libro l = libro.getValue();
 
         LibroUpdateRequest req = new LibroUpdateRequest(
-                titulo,
-                autor,
+                t,
+                a,
                 Integer.parseInt(anio),
                 Integer.parseInt(stock),
-                descripcion
+                desc
         );
 
-        Call<Libro> call = api.actualizarLibro("Bearer " + token, libro.getId(), req);
+        String token = ApiClient.leerToken(getApplication());
 
-        call.enqueue(new Callback<Libro>() {
-            @Override
-            public void onResponse(Call<Libro> call, Response<Libro> response) {
-                if (response.isSuccessful()) {
-                    Libro actualizado = response.body();
-                    libroSeleccionado.setValue(actualizado);
-                    mensaje.setValue("✅ Libro actualizado correctamente.");
-                    Toast.makeText(getApplication(), "✅ Cambios guardados correctamente", Toast.LENGTH_SHORT).show();
-                } else {
-                    mensaje.setValue("⚠️ Error al actualizar: código " + response.code());
-                    Toast.makeText(getApplication(), "Error al actualizar (" + response.code() + ")", Toast.LENGTH_SHORT).show();
-                }
-            }
+        api.actualizarLibro("Bearer " + token, l.getId(), req)
+                .enqueue(new Callback<Libro>() {
+                    @Override
+                    public void onResponse(Call<Libro> call, Response<Libro> response) {
+                        if (response.isSuccessful()) {
+                            libro.setValue(response.body());
+                            toast.setValue("Libro actualizado correctamente");
+                        } else {
+                            toast.setValue("Error al actualizar: " + response.code());
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<Libro> call, Throwable t) {
-                mensaje.setValue("🚫 Error de conexión: " + t.getMessage());
-                Toast.makeText(getApplication(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Libro> call, Throwable t) {
+                        toast.setValue("Error de conexión: " + t.getMessage());
+                    }
+                });
 
-        modoEdicion.setValue(false);
+        editable.setValue(false);
         textoBotonEditar.setValue("✏️ Editar");
     }
 
-    public void eliminarLibro() {
-        Libro libro = libroSeleccionado.getValue();
-        if (libro == null) {
-            mensaje.setValue("⚠️ No se encontró el libro para eliminar.");
-            return;
-        }
-
+    public void reservarLibro() {
+        Libro l = libro.getValue();
         String token = ApiClient.leerToken(getApplication());
-        if (token == null) {
-            Toast.makeText(getApplication(), "Token no encontrado. Inicie sesión nuevamente", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        Call<Void> call = api.eliminarLibro("Bearer " + token, libro.getId());
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    mensaje.setValue("🗑️ Libro eliminado correctamente");
-                    Toast.makeText(getApplication(), "🗑️ Libro eliminado correctamente", Toast.LENGTH_LONG).show();
-                } else {
-                    mensaje.setValue("⚠️ Error al eliminar: código " + response.code());
-                    Toast.makeText(getApplication(), "Error al eliminar (" + response.code() + ")", Toast.LENGTH_SHORT).show();
-                }
-            }
+        PedidoRequest req = new PedidoRequest(l.getId(), l.getTitulo());
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                mensaje.setValue("🚫 Error de conexión al eliminar: " + t.getMessage());
-                Toast.makeText(getApplication(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        api.crearPedido("Bearer " + token, req)
+                .enqueue(new Callback<Pedido>() {
+                    @Override
+                    public void onResponse(Call<Pedido> call, Response<Pedido> response) {
+                        if (response.isSuccessful()) {
+                            toast.setValue("Pedido creado con éxito");
+                        } else {
+                            toast.setValue("Error al crear el pedido");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Pedido> call, Throwable t) {
+                        toast.setValue("Error: " + t.getMessage());
+                    }
+                });
     }
 
-    public void reservarLibro() {
-        Libro libro = libroSeleccionado.getValue();
-        if (libro == null) {
-            mensaje.setValue("No se encontró el libro para reservar");
-            return;
-        }
+    public void solicitarEliminar() {
+        mostrarDialogoEliminar.setValue(null);
+    }
 
+    public void confirmarEliminar() {
+        Libro l = libro.getValue();
         String token = ApiClient.leerToken(getApplication());
-        if (token == null) {
-            mensaje.setValue("⚠️ Sesión expirada. Inicie sesión nuevamente.");
-            return;
-        }
 
-        PedidoRequest request = new PedidoRequest(libro.getId(), libro.getTitulo());
+        api.eliminarLibro("Bearer " + token, l.getId())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            toast.setValue("Libro eliminado");
+                            volverAtras.setValue(null);
+                        } else {
+                            toast.setValue("Error al eliminar");
+                        }
+                    }
 
-        Call<Pedido> call = api.crearPedido("Bearer " + token, request);
-        call.enqueue(new Callback<Pedido>() {
-            @Override
-            public void onResponse(Call<Pedido> call, Response<Pedido> response) {
-                if (response.isSuccessful()) {
-                    mensaje.setValue("📘 Pedido creado con éxito.");
-                    Toast.makeText(getApplication(), "📘 Pedido creado con éxito", Toast.LENGTH_SHORT).show();
-                } else {
-                    mensaje.setValue("⚠️ Error al crear el pedido (" + response.code() + ")");
-                    Toast.makeText(getApplication(), "Error al crear el pedido (" + response.code() + ")", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Pedido> call, Throwable t) {
-                mensaje.setValue("🚫 Error de conexión: " + t.getMessage());
-                Toast.makeText(getApplication(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        toast.setValue("Error de conexión");
+                    }
+                });
     }
 }
-

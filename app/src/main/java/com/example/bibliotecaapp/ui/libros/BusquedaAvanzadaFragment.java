@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,33 +22,32 @@ import java.util.ArrayList;
 public class BusquedaAvanzadaFragment extends Fragment {
 
     private BusquedaAvanzadaViewModel vm;
-    private EditText etTitulo, etAutor, etAnio, etStock, etDescripcion;
-    private Button btnBuscar, btnAnterior, btnSiguiente;
-    private TextView tvPagina;
-    private RecyclerView rvResultados;
     private LibrosAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_busqueda_avanzada, container, false);
 
-        etTitulo = root.findViewById(R.id.etTituloFiltro);
-        etAutor = root.findViewById(R.id.etAutorFiltro);
-        etAnio = root.findViewById(R.id.etAnioFiltro);
-        etStock = root.findViewById(R.id.etStockFiltro);
-        etDescripcion = root.findViewById(R.id.etDescripcionFiltro);
-        btnBuscar = root.findViewById(R.id.btnBuscarAvanzado);
-        btnAnterior = root.findViewById(R.id.btnAnterior);
-        btnSiguiente = root.findViewById(R.id.btnSiguiente);
-        tvPagina = root.findViewById(R.id.tvPagina);
-        rvResultados = root.findViewById(R.id.rvResultadosBusqueda);
+        View root = inflater.inflate(R.layout.fragment_busqueda_avanzada, container, false);
 
         vm = new ViewModelProvider(this).get(BusquedaAvanzadaViewModel.class);
 
-        rvResultados.setLayoutManager(new LinearLayoutManager(getContext()));
+        EditText etTitulo = root.findViewById(R.id.etTituloFiltro);
+        EditText etAutor = root.findViewById(R.id.etAutorFiltro);
+        EditText etAnio = root.findViewById(R.id.etAnioFiltro);
+        EditText etStock = root.findViewById(R.id.etStockFiltro);
+        EditText etDescripcion = root.findViewById(R.id.etDescripcionFiltro);
+
+        Button btnBuscar = root.findViewById(R.id.btnBuscarAvanzado);
+        Button btnAnterior = root.findViewById(R.id.btnAnterior);
+        Button btnSiguiente = root.findViewById(R.id.btnSiguiente);
+
+        TextView tvPagina = root.findViewById(R.id.tvPagina);
+
+        RecyclerView rv = root.findViewById(R.id.rvResultadosBusqueda);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new LibrosAdapter(new ArrayList<>(), this);
-        rvResultados.setAdapter(adapter);
+        rv.setAdapter(adapter);
 
         btnBuscar.setOnClickListener(v -> vm.buscar(
                 etTitulo.getText().toString().trim(),
@@ -62,25 +62,15 @@ public class BusquedaAvanzadaFragment extends Fragment {
 
         vm.getResultados().observe(getViewLifecycleOwner(), adapter::actualizarLista);
 
-        vm.getPaginaActual().observe(getViewLifecycleOwner(), actual -> {
-            Integer total = vm.getTotalPaginas().getValue();
-            if (total != null)
-                tvPagina.setText("Página " + actual + " / " + total);
+        vm.getTextoPagina().observe(getViewLifecycleOwner(), tvPagina::setText);
 
-            btnAnterior.setEnabled(actual != null && actual > 1);
-            btnSiguiente.setEnabled(total != null && actual < total);
-        });
+        vm.getAnteriorEnabled().observe(getViewLifecycleOwner(), btnAnterior::setEnabled);
+        vm.getSiguienteEnabled().observe(getViewLifecycleOwner(), btnSiguiente::setEnabled);
 
-        vm.getTotalPaginas().observe(getViewLifecycleOwner(), total -> {
-            Integer actual = vm.getPaginaActual().getValue();
-            if (actual != null)
-                tvPagina.setText("Página " + actual + " / " + total);
-
-            btnAnterior.setEnabled(actual != null && actual > 1);
-            btnSiguiente.setEnabled(total != null && actual < total);
-        });
+        vm.getMensaje().observe(getViewLifecycleOwner(),
+                msg -> Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        );
 
         return root;
     }
 }
-
