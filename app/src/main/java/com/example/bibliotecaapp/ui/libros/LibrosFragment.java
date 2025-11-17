@@ -46,9 +46,10 @@ public class LibrosFragment extends Fragment {
         });
 
         btnBusquedaAvanzada.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this)
+            Navigation.findNavController(v)
                     .navigate(R.id.action_nav_libros_to_busquedaAvanzadaFragment);
         });
+
 
         btnCargarLibro.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);

@@ -13,9 +13,9 @@
             android:icon="@drawable/outline_book_2_24"
             android:title="@string/menu_libros" />
         <item
-            android:id="@+id/nav_busqueda_avanzada"
+            android:id="@+id/busquedaAvanzadaFragment"
             android:icon="@drawable/outline_book_ribbon_24"
-        android:title="Búsqueda Avanzada" />
+            android:title="Búsqueda Avanzada" />
         <item
             android:id="@+id/nav_reportes"
             android:icon="@drawable/outline_add_task_24"

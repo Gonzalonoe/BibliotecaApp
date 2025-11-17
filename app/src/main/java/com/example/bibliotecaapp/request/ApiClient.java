@@ -149,6 +149,16 @@ public class ApiClient {
 
         @GET("pedidos")
         Call<List<Pedido>> obtenerTodosLosPedidos(@Header("Authorization") String token);
+
+        @PUT("reportes/{id}/aceptar")
+        Call<Reporte> aceptarReporte(@Header("Authorization") String token, @Path("id") int id);
+
+        @PUT("reportes/{id}/cancelar")
+        Call<Reporte> cancelarReporte(@Header("Authorization") String token, @Path("id") int id);
+
+        @GET("reportes/{id}")
+        Call<Reporte> obtenerReportePorId(@Header("Authorization") String token, @Path("id") int id);
+
     }
     public static void guardarToken(Context context, String token) {
         SharedPreferences sp = context.getSharedPreferences("token.xml", Context.MODE_PRIVATE);

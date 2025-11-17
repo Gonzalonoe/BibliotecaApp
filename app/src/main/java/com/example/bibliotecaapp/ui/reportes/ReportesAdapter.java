@@ -19,6 +19,15 @@ import java.util.List;
 public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHolder> {
 
     private final List<Reporte> lista;
+    private OnReporteClickListener listener;
+
+    public interface OnReporteClickListener {
+        void onReporteClick(int reporteId);
+    }
+
+    public void setOnReporteClickListener(OnReporteClickListener listener) {
+        this.listener = listener;
+    }
 
     public ReportesAdapter(List<Reporte> lista) {
         this.lista = lista != null ? lista : new ArrayList<>();
@@ -26,47 +35,33 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReportesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_reporte, parent, false);
-        return new ViewHolder(view);
+        return new ReportesAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Reporte reporte = lista.get(position);
+    public void onBindViewHolder(@NonNull ReportesAdapter.ViewHolder holder, int position) {
+        Reporte r = lista.get(position);
 
-        String titulo = (reporte.getTituloLibro() != null && !reporte.getTituloLibro().isEmpty())
-                ? reporte.getTituloLibro()
-                : "Sin título";
-        holder.tvTitulo.setText(titulo);
+        holder.tvTitulo.setText(r.getTituloLibro());
+        holder.tvSinopsis.setText(r.getSinopsis());
+        holder.tvUsuario.setText("Por: " + r.getUsuarioNombre());
+        holder.tvFecha.setText("Fecha: " + r.getFecha());
 
-        holder.tvSinopsis.setText(
-                reporte.getSinopsis() != null && !reporte.getSinopsis().isEmpty()
-                        ? reporte.getSinopsis()
-                        : "Sin descripción disponible."
-        );
-
-        holder.tvUsuario.setText(
-                reporte.getUsuarioNombre() != null
-                        ? "Por: " + reporte.getUsuarioNombre()
-                        : "Usuario desconocido"
-        );
-
-        holder.tvFecha.setText(
-                reporte.getFecha() != null
-                        ? "Fecha: " + reporte.getFecha()
-                        : "Fecha no disponible"
-        );
-
-        if (reporte.getImagenPortada() != null && !reporte.getImagenPortada().isEmpty()) {
+        if (r.getImagenPortada() != null && !r.getImagenPortada().isEmpty()) {
             Glide.with(holder.itemView.getContext())
-                    .load(reporte.getImagenPortada())
+                    .load(r.getImagenPortada())
                     .placeholder(R.drawable.ic_menu_book)
                     .into(holder.ivPortada);
-        } else {
-            holder.ivPortada.setImageResource(R.drawable.ic_menu_book);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onReporteClick(r.getId());  // ⬅ SOLO ENVÍA EL ID
+            }
+        });
     }
 
     @Override
@@ -83,10 +78,11 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView ivPortada;
         TextView tvTitulo, tvSinopsis, tvUsuario, tvFecha;
 
-        ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPortada = itemView.findViewById(R.id.ivPortadaReporte);
             tvTitulo = itemView.findViewById(R.id.tvTituloReporte);

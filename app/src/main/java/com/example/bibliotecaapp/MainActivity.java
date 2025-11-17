@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         tvEmail.setText(emailUsuario);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_inicio, R.id.nav_libros, R.id.nav_logout,  R.id.nav_pedidos, R.id.nav_busqueda_avanzada)
+                R.id.nav_inicio, R.id.nav_libros, R.id.nav_logout,  R.id.nav_pedidos, R.id.busquedaAvanzadaFragment
+        )
                 .setOpenableLayout(drawer)
                 .build();
 

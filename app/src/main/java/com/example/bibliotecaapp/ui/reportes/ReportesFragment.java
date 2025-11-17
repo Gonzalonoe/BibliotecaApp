@@ -60,8 +60,17 @@ public class ReportesFragment extends Fragment {
         vm = new ViewModelProvider(this).get(ReportesViewModel.class);
 
         rvReportes.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ReportesAdapter(new ArrayList<Reporte>());
+        adapter = new ReportesAdapter(new ArrayList<>());
         rvReportes.setAdapter(adapter);
+
+
+        adapter.setOnReporteClickListener(id -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("reporteId", id);
+
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.detalleReporteFragment, bundle);
+        });
 
         vm.getReportes().observe(getViewLifecycleOwner(), reportes -> {
             if (reportes != null) {
@@ -75,7 +84,8 @@ public class ReportesFragment extends Fragment {
 
         vm.getNavegarVerTodos().observe(getViewLifecycleOwner(), navegar -> {
             if (navegar) {
-                Navigation.findNavController(root).navigate(R.id.action_reportesFragment_to_listaReportesFragment);
+                Navigation.findNavController(root)
+                        .navigate(R.id.action_reportesFragment_to_listaReportesFragment);
                 vm.resetNavegacion();
             }
         });

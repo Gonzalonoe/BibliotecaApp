@@ -1,64 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/colorBackgroundDark">
+    android:background="@color/black">
 
-    <ImageView
-        android:id="@+id/ivPortadaDetalleReporte"
-        android:layout_width="200dp"
-        android:layout_height="260dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_menu_book" />
-
-    <TextView
-        android:id="@+id/tvTituloDetalleReporte"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorTextLight"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/ivPortadaDetalleReporte"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvUsuarioDetalleReporte"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorTextLight"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTituloDetalleReporte"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+            android:id="@+id/ivImagenReporte"
+            android:layout_width="200dp"
+            android:layout_height="260dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tvFechaDetalleReporte"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorTextLight"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tvUsuarioDetalleReporte"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/tvTituloLibro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Título"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/tvSinopsisDetalleReporte"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:textColor="@color/colorTextLight"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tvFechaDetalleReporte"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+            android:id="@+id/tvSinopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="6dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Por: Usuario"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tvFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvEstadoReporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estado: Pendiente"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <!-- Botones -->
+        <LinearLayout
+            android:id="@+id/layoutBotonesAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aceptar Reporte"
+                android:backgroundTint="@color/colorSuccess" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancelar Reporte"
+                android:backgroundTint="@color/colorError"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/btnEmailUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar Email al Usuario"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
