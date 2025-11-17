@@ -80,17 +80,17 @@ public class DetalleReporteFragment extends Fragment {
     }
 
     private void inicializar(View root) {
-        ivImagen = root.findViewById(R.id.ivImagenReporte);
-        tvTitulo = root.findViewById(R.id.tvTituloLibro);
-        tvSinopsis = root.findViewById(R.id.tvSinopsis);
-        tvUsuario = root.findViewById(R.id.tvUsuario);
-        tvEmail = root.findViewById(R.id.tvEmail);
-        tvFecha = root.findViewById(R.id.tvFecha);
+        ivImagen = root.findViewById(R.id.ivPortadaReporte);
+        tvTitulo = root.findViewById(R.id.tvTituloReporte);
+        tvSinopsis = root.findViewById(R.id.tvSinopsisReporte);
+        tvUsuario = root.findViewById(R.id.tvUsuarioReporte);
+        tvEmail = root.findViewById(R.id.tvEmailReporte);
+        tvFecha = root.findViewById(R.id.tvFechaReporte);
         tvEstado = root.findViewById(R.id.tvEstadoReporte);
 
         btnAceptar = root.findViewById(R.id.btnAceptar);
         btnCancelar = root.findViewById(R.id.btnCancelar);
-        btnEmail = root.findViewById(R.id.btnEmailUsuario);
+        btnEmail = root.findViewById(R.id.btnEnviarEmail);
     }
 
     private void mostrarDatos(Reporte r) {
