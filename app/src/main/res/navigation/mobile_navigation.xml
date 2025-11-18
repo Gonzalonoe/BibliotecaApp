@@ -5,11 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_inicio">
 
-    <!-- 🔥 ACCIÓN GLOBAL (siempre debe ir arriba, nivel root) -->
-    <action
-        android:id="@+id/action_global_detallesLibroFragment"
-        app:destination="@id/detallesLibroFragment" />
-
     <!-- ======================================================= -->
     <!--                    FRAGMENTOS                          -->
     <!-- ======================================================= -->
@@ -19,8 +14,6 @@
         android:name="com.example.bibliotecaapp.ui.inicio.InicioFragment"
         android:label="Ubicación Biblioteca"
         tools:layout="@layout/fragment_inicio" />
-
-
 
     <!-- LIBROS -->
     <fragment
@@ -52,10 +45,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-
     </fragment>
-
-
 
     <!-- LOGOUT -->
     <fragment
@@ -64,16 +54,12 @@
         android:label="Cerrar Sesión"
         tools:layout="@layout/fragment_logout" />
 
-
-
     <!-- DETALLE LIBRO -->
     <fragment
         android:id="@+id/detallesLibroFragment"
         android:name="com.example.bibliotecaapp.ui.libros.DetalleLibroFragment"
         android:label="Detalles del Libro"
         tools:layout="@layout/fragment_detalle_libro" />
-
-
 
     <!-- CARGAR LIBRO -->
     <fragment
@@ -82,9 +68,7 @@
         android:label="Cargar Libro"
         tools:layout="@layout/fragment_cargar_libros" />
 
-
-
-    <!-- BÚSQUEDA AVANZADA -->
+    <!-- BUSQUEDA AVANZADA -->
     <fragment
         android:id="@+id/busquedaAvanzadaFragment"
         android:name="com.example.bibliotecaapp.ui.libros.BusquedaAvanzadaFragment"
@@ -98,10 +82,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-
     </fragment>
-
-
 
     <!-- REPORTES -->
     <fragment
@@ -112,66 +93,79 @@
 
         <action
             android:id="@+id/action_reportesFragment_to_listaReportesFragment"
-            app:destination="@id/listaReportesFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/listaReportesFragment" />
 
         <action
             android:id="@+id/action_nav_reportes_to_detalleReporteFragment"
-            app:destination="@id/detalleReporteFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
+            app:destination="@id/detalleReporteFragment" />
     </fragment>
-
-
 
     <!-- LISTA REPORTES -->
     <fragment
         android:id="@+id/listaReportesFragment"
         android:name="com.example.bibliotecaapp.ui.reportes.ListaReportesFragment"
-        android:label="Lista de Reportes"
+        android:label="Lista Reportes"
         tools:layout="@layout/fragment_lista_reportes">
 
         <action
             android:id="@+id/action_listaReportesFragment_to_detalleReporteFragment"
-            app:destination="@id/detalleReporteFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
+            app:destination="@id/detalleReporteFragment" />
     </fragment>
-
-
 
     <!-- DETALLE REPORTE -->
     <fragment
         android:id="@+id/detalleReporteFragment"
         android:name="com.example.bibliotecaapp.ui.reportes.DetalleReporteFragment"
-        android:label="Detalle del Reporte"
+        android:label="Detalle Reporte"
         tools:layout="@layout/fragment_detalle_reporte" />
-
-
 
     <!-- PEDIDOS -->
     <fragment
         android:id="@+id/nav_pedidos"
         android:name="com.example.bibliotecaapp.ui.pedidos.PedidosFragment"
         android:label="Mis Pedidos"
-        tools:layout="@layout/fragment_pedidos" />
+        tools:layout="@layout/fragment_pedidos">
 
-
+        <action
+            android:id="@+id/action_nav_pedidos_to_detallePedidoFragment"
+            app:destination="@id/detallePedidoFragment" />
+    </fragment>
 
     <!-- DETALLE PEDIDO -->
     <fragment
         android:id="@+id/detallePedidoFragment"
         android:name="com.example.bibliotecaapp.ui.pedidos.DetallePedidoFragment"
-        android:label="Detalle del Pedido"
+        android:label="Detalle Pedido"
         tools:layout="@layout/fragment_detalle_pedido" />
 
+    <!-- ======================================================= -->
+    <!--        🔐 RECUPERACIÓN DE CONTRASEÑA (CORREGIDO)        -->
+    <!-- ======================================================= -->
+
+    <!-- Paso 1: Ingresar email -->
+    <fragment
+        android:id="@+id/olvidePasswordFragment"
+        android:name="com.example.bibliotecaapp.cambiarpassword.OlvidePasswordFragment"
+        android:label="Olvidé mi contraseña"
+        tools:layout="@layout/fragment_olvide_password">
+
+        <action
+            android:id="@+id/action_olvidePasswordFragment_to_cambiarPasswordFragment"
+            app:destination="@id/cambiarPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- Paso 2: Cambiar contraseña -->
+    <fragment
+        android:id="@+id/cambiarPasswordFragment"
+        android:name="com.example.bibliotecaapp.cambiarpassword.CambiarPasswordFragment"
+        android:label="Cambiar contraseña"
+        tools:layout="@layout/fragment_cambiar_password" />
+
 </navigation>
+
+
+

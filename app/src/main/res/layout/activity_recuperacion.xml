@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E1A16"
+    android:padding="24dp"
+    tools:context=".cambiarpassword.RecuperacionActivity">
+
+    <TextView
+        android:id="@+id/tvTituloRecuperacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Restablecer Contraseña"
+        android:textSize="22sp"
+        android:textColor="#FFE9B5"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etRecEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="#D38A1B"
+        android:textColor="#FFE9B5"
+        android:textColorHint="#9E8C6B"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloRecuperacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etPasswordActual"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña actual"
+        android:inputType="textPassword"
+        android:backgroundTint="#D38A1B"
+        android:textColor="#FFE9B5"
+        android:textColorHint="#9E8C6B"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/etRecEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etPasswordNueva"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nueva contraseña"
+        android:inputType="textPassword"
+        android:backgroundTint="#D38A1B"
+        android:textColor="#FFE9B5"
+        android:textColorHint="#9E8C6B"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/etPasswordActual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnRestablecerPassword"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="RESTABLECER CONTRASEÑA"
+        android:textColor="#1E1A16"
+        android:textStyle="bold"
+        android:backgroundTint="#D38A1B"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/etPasswordNueva"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

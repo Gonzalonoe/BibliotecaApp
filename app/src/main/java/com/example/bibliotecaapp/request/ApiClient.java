@@ -3,6 +3,7 @@ package com.example.bibliotecaapp.request;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.bibliotecaapp.models.CambiarPasswordRequest;
 import com.example.bibliotecaapp.models.Libro;
 import com.example.bibliotecaapp.models.LibroUpdateRequest;
 import com.example.bibliotecaapp.models.LoginRequest;
@@ -158,6 +159,10 @@ public class ApiClient {
 
         @GET("reportes/{id}")
         Call<Reporte> obtenerReportePorId(@Header("Authorization") String token, @Path("id") int id);
+
+        @POST("auth/cambiar-password")
+        Call<Void> cambiarPassword(@Body CambiarPasswordRequest req);
+
 
     }
     public static void guardarToken(Context context, String token) {

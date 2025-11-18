@@ -1,6 +1,7 @@
 package com.example.bibliotecaapp.ui.login;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.bibliotecaapp.cambiarpassword.RecuperacionActivity;
 import com.example.bibliotecaapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -55,6 +57,12 @@ public class LoginActivity extends AppCompatActivity {
                     REQUEST_CALL_PERMISSION
             );
         });
+
+        binding.tvOlvidaste.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RecuperacionActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     @Override
