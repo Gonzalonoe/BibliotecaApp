@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("usuario", MODE_PRIVATE);
         String rol = sp.getString("rol", "Lector"); // valor por defecto
 
-        // Si NO es admin → ocultar
         if (!rol.equalsIgnoreCase("Admin")) {
             navigationView.getMenu().findItem(R.id.usuariosActivosFragment).setVisible(false);
             navigationView.getMenu().findItem(R.id.usuariosBajaFragment).setVisible(false);

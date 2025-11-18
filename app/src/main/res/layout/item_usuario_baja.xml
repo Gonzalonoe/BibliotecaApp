@@ -3,55 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="14dp"
-    app:cardElevation="5dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
     android:backgroundTint="#3A332D">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="18dp">
 
+        <!-- Nombre usuario deshabilitado -->
         <TextView
             android:id="@+id/tvNombreUsuarioBaja"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nombre deshabilitado"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textStyle="bold"
-            android:textColor="#FFBC80"/>
+            android:textColor="#FFBC80"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Email -->
         <TextView
             android:id="@+id/tvEmailUsuarioBaja"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="correo@deshabilitado.com"
             android:textSize="14sp"
             android:textColor="#E1C9AB"
-            android:paddingTop="2dp"/>
+            android:paddingTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreUsuarioBaja"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Rol -->
         <TextView
             android:id="@+id/tvRolUsuarioBaja"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Rol: Lector"
             android:textSize="14sp"
             android:textColor="#D9C6A8"
-            android:paddingTop="4dp"/>
+            android:paddingTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/tvEmailUsuarioBaja"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Botón Reactivar -->
         <Button
             android:id="@+id/btnReactivarUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
             android:text="Reactivar"
             android:textColor="#FFFFFF"
             android:backgroundTint="#558B2F"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="6dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvRolUsuarioBaja"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
