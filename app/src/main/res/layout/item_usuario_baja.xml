@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="5dp"
+    android:backgroundTint="#3A332D">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvNombreUsuarioBaja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre deshabilitado"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFBC80"/>
+
+        <TextView
+            android:id="@+id/tvEmailUsuarioBaja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="correo@deshabilitado.com"
+            android:textSize="14sp"
+            android:textColor="#E1C9AB"
+            android:paddingTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvRolUsuarioBaja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rol: Lector"
+            android:textSize="14sp"
+            android:textColor="#D9C6A8"
+            android:paddingTop="4dp"/>
+
+        <Button
+            android:id="@+id/btnReactivarUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reactivar"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#558B2F"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

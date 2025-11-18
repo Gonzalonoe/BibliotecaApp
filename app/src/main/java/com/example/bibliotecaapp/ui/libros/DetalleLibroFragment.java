@@ -71,8 +71,8 @@ public class DetalleLibroFragment extends Fragment {
 
         vm.mostrarDialogoEliminar.observe(getViewLifecycleOwner(), unused -> {
             new android.app.AlertDialog.Builder(requireContext())
-                    .setTitle("Confirmar eliminación")
-                    .setMessage("¿Seguro que deseas eliminar este libro?")
+                    .setTitle("Dar de baja el libro")
+                    .setMessage("El libro será ocultado, pero se mantendrá en la base de datos.\n¿Deseas continuar?")
                     .setPositiveButton("Sí", (dialog, which) -> vm.confirmarEliminar())
                     .setNegativeButton("Cancelar", null)
                     .show();

@@ -36,13 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
         actualizarHeader();
 
+        ocultarOpcionesSegunRol();
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_inicio,
                 R.id.nav_libros,
                 R.id.nav_logout,
                 R.id.nav_pedidos,
                 R.id.busquedaAvanzadaFragment,
-                R.id.nav_reportes
+                R.id.nav_reportes,
+                R.id.usuariosActivosFragment,
+                R.id.usuariosBajaFragment
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -69,17 +73,35 @@ public class MainActivity extends AppCompatActivity {
         tvEmail.setText(email);
     }
 
+    private void ocultarOpcionesSegunRol() {
+
+        NavigationView navigationView = binding.navView;
+
+        SharedPreferences sp = getSharedPreferences("usuario", MODE_PRIVATE);
+        String rol = sp.getString("rol", "Lector"); // valor por defecto
+
+        // Si NO es admin → ocultar
+        if (!rol.equalsIgnoreCase("Admin")) {
+            navigationView.getMenu().findItem(R.id.usuariosActivosFragment).setVisible(false);
+            navigationView.getMenu().findItem(R.id.usuariosBajaFragment).setVisible(false);
+        }
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
         actualizarHeader();
+        ocultarOpcionesSegunRol();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

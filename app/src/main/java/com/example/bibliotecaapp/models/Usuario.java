@@ -11,6 +11,7 @@ public class Usuario implements Serializable {
     private String nombre;
     private String email;
     private String rol;
+    private int estado;
 
     @SerializedName("password")
     private String passwordHash;
@@ -50,4 +51,22 @@ public class Usuario implements Serializable {
 
     public String getPasswordSalt() { return passwordSalt; }
     public void setPasswordSalt(String passwordSalt) { this.passwordSalt = passwordSalt; }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public Usuario(String email, int estado, String id, String nombre, String passwordHash, String passwordSalt, String rol) {
+        this.email = email;
+        this.estado = estado;
+        this.id = id;
+        this.nombre = nombre;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+        this.rol = rol;
+    }
 }

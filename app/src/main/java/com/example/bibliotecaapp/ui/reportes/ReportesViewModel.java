@@ -124,7 +124,7 @@ public class ReportesViewModel extends AndroidViewModel {
         try {
             Context context = getApplication().getApplicationContext();
 
-            String rol = context.getSharedPreferences("datos_usuario", Context.MODE_PRIVATE)
+            String rol = context.getSharedPreferences("usuario", Context.MODE_PRIVATE)
                     .getString("rol", "");
 
             boolean esAdmin = rol.equalsIgnoreCase("1") || rol.equalsIgnoreCase("admin");

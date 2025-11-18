@@ -37,7 +37,7 @@ public class DetallePedidoFragment extends Fragment {
 
 
         String rol = requireContext()
-                .getSharedPreferences("datos_usuario", Context.MODE_PRIVATE)
+                .getSharedPreferences("usuario", Context.MODE_PRIVATE)
                 .getString("rol", "");
 
         boolean esAdmin = rol.equalsIgnoreCase("1") || rol.equalsIgnoreCase("admin");

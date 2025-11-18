@@ -49,10 +49,10 @@ public class DetalleLibroViewModel extends AndroidViewModel {
 
     private void verificarRol() {
         SharedPreferences sp = getApplication()
-                .getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+                .getSharedPreferences("usuario", Context.MODE_PRIVATE);
 
         String rol = sp.getString("rol", "0");
-        boolean admin = rol.equals("1") || rol.equalsIgnoreCase("admin");
+        boolean admin = rol.equalsIgnoreCase("admin") || rol.equals("1");
 
         visibleEditar.setValue(admin ? android.view.View.VISIBLE : android.view.View.GONE);
         visibleEliminar.setValue(admin ? android.view.View.VISIBLE : android.view.View.GONE);
@@ -139,10 +139,10 @@ public class DetalleLibroViewModel extends AndroidViewModel {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            toast.setValue("Libro eliminado");
+                            toast.setValue("Libro dado de baja");
                             volverAtras.setValue(null);
                         } else {
-                            toast.setValue("Error al eliminar");
+                            toast.setValue("Error al dar de baja");
                         }
                     }
 

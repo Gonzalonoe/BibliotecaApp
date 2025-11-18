@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="5dp"
+    android:layout_margin="8dp"
+    android:backgroundTint="#2F2A25">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvNombreUsuarioActivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del usuario"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFE9B5"/>
+
+        <TextView
+            android:id="@+id/tvEmailUsuarioActivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="correo@usuario.com"
+            android:textSize="14sp"
+            android:textColor="#D6C7A4"
+            android:paddingTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvRolUsuarioActivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rol: Lector"
+            android:textSize="14sp"
+            android:textColor="#C8B697"
+            android:paddingTop="4dp"/>
+
+        <Button
+            android:id="@+id/btnDarDeBaja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dar de baja"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#9E3B3B"
+            android:layout_gravity="end"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

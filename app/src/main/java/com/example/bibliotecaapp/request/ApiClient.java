@@ -163,6 +163,18 @@ public class ApiClient {
         @POST("auth/cambiar-password")
         Call<Void> cambiarPassword(@Body CambiarPasswordRequest req);
 
+        @GET("usuarios/activos")
+        Call<List<Usuario>> obtenerUsuariosActivos(@Header("Authorization") String token);
+
+        @GET("usuarios/baja")
+        Call<List<Usuario>> obtenerUsuariosDadosDeBaja(@Header("Authorization") String token);
+
+        @DELETE("usuarios/{id}")
+        Call<Void> darDeBajaUsuario(@Header("Authorization") String token, @Path("id") int id);
+
+        @PUT("usuarios/activar/{id}")
+        Call<Void> activarUsuario(@Header("Authorization") String token, @Path("id") int id);
+
 
     }
     public static void guardarToken(Context context, String token) {

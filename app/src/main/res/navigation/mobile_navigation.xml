@@ -125,6 +125,18 @@
         android:label="Detalle Pedido"
         tools:layout="@layout/fragment_detalle_pedido" />
 
+    <fragment
+        android:id="@+id/usuariosActivosFragment"
+        android:name="com.example.bibliotecaapp.ui.usuarios.UsuariosActivosFragment"
+        android:label="Usuarios Activos"
+        tools:layout="@layout/fragment_usuarios_activos" />
+
+    <fragment
+        android:id="@+id/usuariosBajaFragment"
+        android:name="com.example.bibliotecaapp.ui.usuarios.UsuariosBajaFragment"
+        android:label="Usuarios dados de baja"
+        tools:layout="@layout/fragment_usuarios_baja" />
+
 </navigation>
 
 

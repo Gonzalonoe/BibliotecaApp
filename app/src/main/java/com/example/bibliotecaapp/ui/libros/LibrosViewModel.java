@@ -62,7 +62,7 @@ public class LibrosViewModel extends AndroidViewModel {
 
     private void verificarRol() {
         SharedPreferences sp =
-                getApplication().getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+                getApplication().getSharedPreferences("usuario", Context.MODE_PRIVATE);
 
         String rol = sp.getString("rol", "").trim();
 

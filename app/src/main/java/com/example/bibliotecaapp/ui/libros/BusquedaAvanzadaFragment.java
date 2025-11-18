@@ -37,7 +37,6 @@ public class BusquedaAvanzadaFragment extends Fragment {
         EditText etAnio = root.findViewById(R.id.etAnioFiltro);
         EditText etStock = root.findViewById(R.id.etStockFiltro);
         EditText etDescripcion = root.findViewById(R.id.etDescripcionFiltro);
-
         Button btnBuscar = root.findViewById(R.id.btnBuscarAvanzado);
         Button btnAnterior = root.findViewById(R.id.btnAnterior);
         Button btnSiguiente = root.findViewById(R.id.btnSiguiente);
