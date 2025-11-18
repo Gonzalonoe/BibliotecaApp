@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
         );
 
         vm.getNavegarLogin().observe(this, unused -> {
-            finish(); // el ViewModel decide CUÁNDO volver
+            finish();
         });
 
         binding.btnRegistrar.setOnClickListener(v ->

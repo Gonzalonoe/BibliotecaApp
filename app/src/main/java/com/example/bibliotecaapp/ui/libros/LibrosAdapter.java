@@ -80,7 +80,6 @@ public class LibrosAdapter extends RecyclerView.Adapter<LibrosAdapter.ViewHolder
             } else if (currentId == R.id.busquedaAvanzadaFragment) {
                 actionId = R.id.action_busquedaAvanzadaFragment_to_detallesLibroFragment;
             } else {
-                // fallback seguro
                 actionId = R.id.detallesLibroFragment;
             }
 

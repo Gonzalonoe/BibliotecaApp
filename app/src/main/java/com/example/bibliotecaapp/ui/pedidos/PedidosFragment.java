@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,11 +12,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.bibliotecaapp.R;
 import com.example.bibliotecaapp.models.Pedido;
 
-import java.util.List;
 
 public class PedidosFragment extends Fragment {
 
@@ -44,7 +40,6 @@ public class PedidosFragment extends Fragment {
             if (pedidos != null && !pedidos.isEmpty()) {
                 adapter.setPedidos(pedidos);
             } else {
-                Toast.makeText(getContext(), "No hay pedidos cargados", Toast.LENGTH_SHORT).show();
             }
         });
 

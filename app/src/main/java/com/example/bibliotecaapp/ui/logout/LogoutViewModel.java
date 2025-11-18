@@ -54,9 +54,14 @@ public class LogoutViewModel extends ViewModel {
 
     private void cerrarSesion(Context context, Activity activity) {
 
+        context.getSharedPreferences("usuario", Context.MODE_PRIVATE)
+                .edit()
+                .clear()
+                .apply();
+
         context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
                 .edit()
-                .remove("token")
+                .clear()
                 .apply();
 
         Intent intent = new Intent(context, LoginActivity.class);

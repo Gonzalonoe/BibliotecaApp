@@ -87,7 +87,6 @@ public class DetalleReporteFragment extends Fragment {
         tvEmail = root.findViewById(R.id.tvEmailReporte);
         tvFecha = root.findViewById(R.id.tvFechaReporte);
         tvEstado = root.findViewById(R.id.tvEstadoReporte);
-
         btnAceptar = root.findViewById(R.id.btnAceptar);
         btnCancelar = root.findViewById(R.id.btnCancelar);
         btnEmail = root.findViewById(R.id.btnEnviarEmail);

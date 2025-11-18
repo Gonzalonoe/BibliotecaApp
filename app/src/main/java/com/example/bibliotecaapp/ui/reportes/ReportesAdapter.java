@@ -59,7 +59,7 @@ public class ReportesAdapter extends RecyclerView.Adapter<ReportesAdapter.ViewHo
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onReporteClick(r.getId());  // ⬅ SOLO ENVÍA EL ID
+                listener.onReporteClick(r.getId());
             }
         });
     }

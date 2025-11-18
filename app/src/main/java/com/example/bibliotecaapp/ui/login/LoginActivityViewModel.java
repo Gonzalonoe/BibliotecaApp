@@ -106,8 +106,7 @@ public class LoginActivityViewModel extends AndroidViewModel implements SensorEv
 
                 Usuario u = response.body();
 
-                SharedPreferences sp = getApplication()
-                        .getSharedPreferences("datos_usuario", Context.MODE_PRIVATE);
+                SharedPreferences sp = getApplication().getSharedPreferences("usuario", Context.MODE_PRIVATE);
 
                 sp.edit()
                         .putString("id", u.getId())

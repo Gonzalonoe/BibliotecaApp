@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -35,19 +34,15 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        View headerView = navigationView.getHeaderView(0);
-        TextView tvNombre = headerView.findViewById(R.id.tvNombreUsuario);
-        TextView tvEmail = headerView.findViewById(R.id.tvEmailUsuario);
-
-        SharedPreferences sp = getSharedPreferences("usuario", MODE_PRIVATE);
-        String nombreUsuario = sp.getString("nombre", "Invitado");
-        String emailUsuario = sp.getString("email", "Sin email");
-
-        tvNombre.setText(nombreUsuario);
-        tvEmail.setText(emailUsuario);
+        actualizarHeader();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_inicio, R.id.nav_libros, R.id.nav_logout,  R.id.nav_pedidos, R.id.busquedaAvanzadaFragment, R.id.nav_reportes
+                R.id.nav_inicio,
+                R.id.nav_libros,
+                R.id.nav_logout,
+                R.id.nav_pedidos,
+                R.id.busquedaAvanzadaFragment,
+                R.id.nav_reportes
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -57,7 +52,28 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    private void actualizarHeader() {
 
+        NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView tvNombre = headerView.findViewById(R.id.tvNombreUsuario);
+        TextView tvEmail = headerView.findViewById(R.id.tvEmailUsuario);
+
+        SharedPreferences sp = getSharedPreferences("usuario", MODE_PRIVATE);
+
+        String nombre = sp.getString("nombre", "Invitado");
+        String email = sp.getString("email", "Sin email");
+
+        tvNombre.setText(nombre);
+        tvEmail.setText(email);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        actualizarHeader();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
