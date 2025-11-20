@@ -1,8 +1,8 @@
 package com.example.bibliotecaapp.ui.login;
 
 import android.app.Application;
-import android.content.Intent;
 import android.util.Log;
+import android.util.Patterns;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -36,6 +36,11 @@ public class RegisterActivityViewModel extends AndroidViewModel {
 
         if (nombre.isEmpty() || email.isEmpty() || password.isEmpty()) {
             mensaje.setValue("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mensaje.setValue("Ingrese un email válido");
             return;
         }
 
